@@ -118,7 +118,7 @@ chainWebpack: config => {
 
 but now we don't have `mad-vue-markdown-loader`. Let's create it.
 
-create `cripts/mad-vue-markdown-loader` folder and create file
+create `scripts/mad-vue-markdown-loader` folder and create file
 
 - index.js
 - package.json
@@ -132,7 +132,8 @@ module.exports = function(markdown) {
 }
 ```
 
-Finally, we should install this dependency into npm setting. Add this line into `devDependencies` section:
+Finally, we should install this dependency into npm setting. 
+Add this line into `devDependencies` section in root `package.json`:
 
 ```
 "mad-vue-markdown-loader": "./scripts/mad-vue-markdown-loader",
