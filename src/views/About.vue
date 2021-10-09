@@ -1,21 +1,12 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <div>
-      <pre v-html="md"></pre>
-    </div>
+    <router-link to="/about/button">button</router-link>
+    <hr />
+    <router-view />
   </div>
 </template>
 
 <script>
-import md from "./README.md";
-
-export default {
-  data: () => ({
-    md: md
-  }),
-  created() {
-    console.log(md);
-  }
-};
+export default {};
 </script>
