@@ -1,69 +1,61 @@
 // docs: https://webpack.js.org/contribute/writing-a-loader/
 
-// const loaderUtils = require("loader-utils");
-//
-// module.exports = function(source) {
-//
-//   const options = loaderUtils.getOptions(this) || {};
-//   const params = Object.assign({}, {}, options); // it is safe to pass null to Object.assign()
-//
-//   let markdownStr = source;
-//   markdownStr = markdownStr.replace(/NAME/g, params.foo);
-//   return `export default ${JSON.stringify(markdownStr)}`;
-// };
-
-// TODO read code logic. vue 2 parser is wrong AST
-var loaderUtils = require("loader-utils");
-var hljs = require("highlight.js");
-var cheerio = require("cheerio");
-var markdown = require("markdown-it");
-var Token = require("markdown-it/lib/token");
+const loaderUtils = require("loader-utils");
+const hljs = require("highlight.js");
+const cheerio = require("cheerio");
+const markdown = require("markdown-it");
+const Token = require("markdown-it/lib/token");
 
 /**
- * `<pre></pre>` => `<pre v-pre></pre>`
- * `<code></code>` => `<code v-pre></code>`
+ *  Skip compilation for this element and all its children.
+ *
+ *  Example:
+ * <pre></pre> => <pre v-pre></pre>
+ * <code></code> => <code v-pre></code>
  * @param  {string} str
  * @return {string}
  */
-var addVuePreviewAttr = function(str) {
+const addVuePreviewAttr = (str) => {
   return str.replace(/(<pre|<code)/g, "$1 v-pre");
 };
 
 /**
  * renderHighlight
+ *
  * @param  {string} str
  * @param  {string} lang
  */
-var renderHighlight = function(str, lang) {
-  if (!(lang && hljs.getLanguage(lang))) {
-    return "";
-  }
-
-  return hljs.highlight(lang, str, true).value;
+const renderHighlight = (str, lang) => {
+  if (!(lang && hljs.getLanguage(lang))) return "";
+  return hljs.highlight(str, { language: lang, ignoreIllegals: true }).value;
 };
 
 /**
  * html => vue file template
- * @param  {[type]} html [description]
- * @return {[type]}      [description]
+ * @param html
+ * @param wrapper
+ * @returns {string}
  */
-var renderVueTemplate = function(html, wrapper) {
-  var $ = cheerio.load(html, {
+const renderVueTemplate = (html, wrapper) => {
+  // cheerio init
+  const $ = cheerio.load(html, {
     decodeEntities: false,
     lowerCaseAttributeNames: false,
     lowerCaseTags: false
   });
 
-  var output = {
+  // extract style and script(first), then remove style and script
+  const output = {
     style: $.html("style"),
     // get only the first script child. Causes issues if multiple script files in page.
     script: $.html($("script").first())
   };
-  var result;
-
   $("style").remove();
   $("script").remove();
 
+  let result;
+
+  // $.html() means all html code
   result =
     `<template><${wrapper}>` +
     $.html() +
@@ -76,20 +68,23 @@ var renderVueTemplate = function(html, wrapper) {
 };
 
 module.exports = function(source) {
-  this.cacheable && this.cacheable();
-  var parser, preprocess;
-  var params = loaderUtils.getOptions(this) || {};
-  var vueMarkdownOptions = this._compilation.__vueMarkdownOptions__;
-  var opts = vueMarkdownOptions ? Object.create(vueMarkdownOptions.__proto__) : {}; // inherit prototype
-  var preventExtract = false;
+  let parser, preprocess;
+  const params = loaderUtils.getOptions(this) || {};
+  // NEED debug: this._compilation.__vueMarkdownOptions__
+  const vueMarkdownOptions = this._compilation.__vueMarkdownOptions__;
+  let opts = vueMarkdownOptions ? Object.create(vueMarkdownOptions.__proto__) : {}; // inherit prototype
+  let preventExtract = false;
 
+  // merge options
   opts = Object.assign(opts, params, vueMarkdownOptions); // assign attributes
 
+  // handle prevent extract flag
   if (opts.preventExtract) {
     delete opts.preventExtract;
     preventExtract = true;
   }
 
+  // parser
   if (typeof opts.render === "function") {
     parser = opts;
   } else {
@@ -103,7 +98,9 @@ module.exports = function(source) {
       opts
     );
 
-    var plugins = opts.use;
+    // if has webpack plugins
+    const plugins = opts.use;
+    // if has preprocess function
     preprocess = opts.preprocess;
 
     delete opts.use;
@@ -113,26 +110,29 @@ module.exports = function(source) {
 
     //add ruler:extract script and style tags from html token content
     !preventExtract &&
-    parser.core.ruler.push("extract_script_or_style", function replace(
-      state
-    ) {
+    parser.core.ruler.push("extract_script_or_style", function replace(state) {
       let tag_reg = new RegExp("<(script|style)(?:[^<]|<)+</\\1>", "g");
       let newTokens = [];
+      // get new tokens
       state.tokens
-        .filter(token => token.type == "fence" && token.info == "html")
+        .filter(token => token.type === "fence" && token.info === "html")
         .forEach(token => {
           let tokens = (token.content.match(tag_reg) || []).map(content => {
             let t = new Token("html_block", "", 0);
             t.content = content;
             return t;
           });
+
           if (tokens.length > 0) {
             newTokens.push.apply(newTokens, tokens);
           }
         });
+
+      // merge new tokens to tokens
       state.tokens.push.apply(state.tokens, newTokens);
     });
 
+    // apply webpack plugins
     if (plugins) {
       plugins.forEach(function(plugin) {
         if (Array.isArray(plugin)) {
@@ -148,19 +148,20 @@ module.exports = function(source) {
    * override default parser rules by adding v-pre attribute on 'code' and 'pre' tags
    * @param {Array<string>} rules rules to override
    */
-  function overrideParserRules(rules) {
+  const overrideParserRules = function(rules) {
     if (parser && parser.renderer && parser.renderer.rules) {
-      var parserRules = parser.renderer.rules;
+      let parserRules = parser.renderer.rules;
+
       rules.forEach(function(rule) {
         if (parserRules && parserRules[rule]) {
-          var defaultRule = parserRules[rule];
+          const defaultRule = parserRules[rule];
           parserRules[rule] = function() {
             return addVuePreviewAttr(defaultRule.apply(this, arguments));
           };
         }
       });
     }
-  }
+  };
 
   overrideParserRules(["code_inline", "code_block", "fence"]);
 
@@ -168,14 +169,17 @@ module.exports = function(source) {
     source = preprocess.call(this, parser, source);
   }
 
+  // why replace @ and render, then recover @
   source = source.replace(/@/g, "__at__");
+  const content = parser.render(source).replace(/__at__/g, "@");
 
-  var content = parser.render(source).replace(/__at__/g, "@");
-  var result = renderVueTemplate(content, opts.wrapper);
+  const result = renderVueTemplate(content, opts.wrapper);
 
+  // if raw is true, return plain result; or not return module
   if (opts.raw) {
     return result;
   } else {
     return "module.exports = " + JSON.stringify(result);
   }
+
 };

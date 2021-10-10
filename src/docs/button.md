@@ -1,18 +1,17 @@
 <style>
-.inline .my-button {
+.my-button {
   margin: 0 10px 10px 0;
 }
 </style>
 <script>
-export default {
-};
+console.log("button docs");
 </script>
 
 ## button
 
 ### 基本用法
 
-:::demo
+:::demo button description
 ```html
 <my-button>default</my-button>
 ```

@@ -11,6 +11,7 @@
         <span v-else>收起代码</span>
       </span>
     </div>
+
     <div class="demo-block-meta" v-if="$slots.default">
       <slot></slot>
       <span
@@ -22,6 +23,7 @@
         <span v-else>收起代码</span>
       </span>
     </div>
+
     <div class="demo-block-code" v-show="showCode">
       <slot name="highlight"></slot>
     </div>
