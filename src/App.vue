@@ -15,6 +15,7 @@
 // https://github.com/highlightjs/highlight.js/#es6-modules--import
 @import "~highlight.js/styles/github.css";
 
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -35,24 +35,27 @@ export default {
   name: "DemoBlock",
   data() {
     return {
-      showCode: false,
+      showCode: false
     };
   },
+  mounted () {
+    // const code = document.querySelectorAll("pre code");
+    // console.log(code);
+    // [...code].forEach(el => el.textContent = el.textContent.replace(/^\n/, ''))
+  }
 };
 </script>
+
 <style lang="scss">
 .demo-block {
   position: relative;
-
   display: inline-block;
-
   box-sizing: border-box;
+
   width: 100%;
   margin: 0 0 16px;
 
-  -webkit-transition: all 0.2s;
   transition: all 0.2s;
-
   border: 1px solid #ebedf0;
   border-radius: 2px;
 
@@ -69,16 +72,13 @@ export default {
     position: absolute;
     right: 16px;
     bottom: 6px;
-
+    font-size: 14px;
     height: 18px;
-
+    line-height: 18px;
     cursor: pointer;
     user-select: none;
     text-align: center;
-
     color: #888888;
-
-    line-height: 18px;
 
     img {
       position: absolute;
@@ -89,15 +89,10 @@ export default {
       max-width: 100%;
       margin: 0;
 
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
       user-select: none;
-      -webkit-transition: all 0.4s;
       transition: all 0.4s;
       vertical-align: baseline;
 
-      -webkit-box-shadow: none;
       box-shadow: none;
     }
   }
@@ -114,14 +109,12 @@ export default {
 
   .demo-block-meta {
     position: relative;
-
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    width: 100%;
-    margin-bottom: -1px;
-    padding: 12px 50px 12px 20px;
 
-    -webkit-transition: background-color 0.4s;
+    width: 100%;
+    padding: 12px 50px 12px 20px;
+    margin-bottom: -1px;
+
     transition: background-color 0.4s;
 
     color: #444;
@@ -137,8 +130,12 @@ export default {
     padding: 16px 32px;
 
     background-color: #f7f7f7;
-
     font-size: 0;
+
+    pre {
+      margin: 0;
+      padding: 0;
+    }
 
     code {
       display: block;
@@ -154,23 +151,15 @@ export default {
     }
   }
 
-  .demo-block-code pre {
-    margin: 0;
-    padding: 0;
-  }
 }
 
 .sh-checkbox {
   position: relative;
-
   display: inline-block;
-
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
-
   color: #444;
-
   font-size: 14px;
   font-weight: 500;
 }
