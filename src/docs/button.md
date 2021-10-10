@@ -13,26 +13,54 @@ console.log("button docs");
 ### 基本用法1
 
 :::demo foo and bar
+
 ```html 
 <my-button>foo</my-button>
 <my-button>bar</my-button>
 ```
+
 :::
 
 ### 基本用法2
 
 :::demo
+
 ```html 
 <my-button>baz</my-button>
 ```
+
 :::
 
 ### options
 
-> options 
+> options
 
 ```js
-function foo(){
+function foo() {
+  return "bar"
+}
+```
+
+> options
+
+```js
+function foo() {
+  return "bar"
+}
+```
+
+> options
+
+```js
+function foo() {
+  return "bar"
+}
+```
+
+> options
+
+```js
+function foo() {
   return "bar"
 }
 ```

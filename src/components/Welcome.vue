@@ -4,9 +4,7 @@
     <p>
       For a guide and recipes on how to use,<br />
       check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >mad-ui documentation</a
-      >.
+      <router-link to="/about/button">button</router-link>
     </p>
   </div>
 </template>
