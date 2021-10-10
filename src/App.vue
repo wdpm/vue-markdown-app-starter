@@ -5,14 +5,15 @@
     <router-link to="/about">About</router-link>
   </div>
   <article class="markdown-body">
-    <h1>Unicorns</h1>
-    <p>All the things</p>
     <router-view />
   </article>
 </template>
 
 <style lang="scss">
+// https://github.com/sindresorhus/github-markdown-css
 @import "~github-markdown-css";
+// https://github.com/highlightjs/highlight.js/#es6-modules--import
+@import "~highlight.js/styles/github.css";
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -34,7 +35,6 @@
   }
 }
 
-// https://github.com/sindresorhus/github-markdown-css
 // override github-markdown-css
 .markdown-body {
   box-sizing: border-box;
