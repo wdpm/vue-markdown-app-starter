@@ -15,7 +15,6 @@
 // https://github.com/highlightjs/highlight.js/#es6-modules--import
 @import "~highlight.js/styles/github.css";
 
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -31,7 +30,7 @@
     color: #444444;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #e8aa95;
     }
   }
 }
@@ -42,7 +41,7 @@
   min-width: 200px;
   max-width: 980px;
   margin: 0 auto;
-  padding: 45px;
+  padding: 24px 45px;
 }
 
 @media (max-width: 767px) {
