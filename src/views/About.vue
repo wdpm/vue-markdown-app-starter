@@ -2,7 +2,6 @@
   <div class="about">
     <h1>This is an about page</h1>
     <router-link to="/about/button">button</router-link>
-    <hr />
     <router-view />
   </div>
 </template>
