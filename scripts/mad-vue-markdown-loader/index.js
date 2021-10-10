@@ -68,10 +68,11 @@ const renderVueTemplate = (html, wrapper) => {
 };
 
 module.exports = function(source) {
+  this.cacheable && this.cacheable();
   let parser, preprocess;
   const params = loaderUtils.getOptions(this) || {};
   // NEED debug: this._compilation.__vueMarkdownOptions__
-  const vueMarkdownOptions = this._compilation.__vueMarkdownOptions__;
+  const vueMarkdownOptions = (this._compilation && this._compilation.__vueMarkdownOptions__) || {};
   let opts = vueMarkdownOptions ? Object.create(vueMarkdownOptions.__proto__) : {}; // inherit prototype
   let preventExtract = false;
 
@@ -169,13 +170,13 @@ module.exports = function(source) {
     source = preprocess.call(this, parser, source);
   }
 
-  // why replace @ and render, then recover @
+  // @符号在markdown中是特殊符号, 改为 __at__ ,然后渲染该md文件，这样不会冲突
   source = source.replace(/@/g, "__at__");
+  // 渲染完md之后，就把@符号恢复，后续会交给vue-loader
   const content = parser.render(source).replace(/__at__/g, "@");
 
   const result = renderVueTemplate(content, opts.wrapper);
 
-  // if raw is true, return plain result; or not return module
   if (opts.raw) {
     return result;
   } else {

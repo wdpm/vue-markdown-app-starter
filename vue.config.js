@@ -19,7 +19,6 @@ module.exports = {
       .use("mad-vue-markdown-loader")
       .loader("./scripts/mad-vue-markdown-loader/index.js")
       .options({
-        foo: "bar",
         raw: true,
         preprocess: function(markdownIt, source) {
           // do any thing
@@ -47,7 +46,8 @@ module.exports = {
                   // 2.获取代码块内的html和js代码
                   let content = tokens[idx + 1].content;
 
-                  // 3.使用自定义开发组件【DemoBlock】来包裹内容并且渲染成案例和代码示例
+                  // 3.使用自定义开发组件【DemoBlock】来包裹内容
+                  // 然后程序继续render fence，按照fence规则渲染出代码放入v-slot:highlight，作为隐藏的查看代码。
                   return `<demo-block>
                                 <template v-slot:source>
                                     <div class="source">${content}</div>
@@ -57,7 +57,7 @@ module.exports = {
                                 
                                 <template v-slot:highlight>
                                   <div class="highlight">
-                                
+                                  <!--这里就是显示代码片段的地方-->                            
                             `;
                 } else {
                   // close tags must put here

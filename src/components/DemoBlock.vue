@@ -38,11 +38,6 @@ export default {
       showCode: false
     };
   },
-  mounted () {
-    // const code = document.querySelectorAll("pre code");
-    // console.log(code);
-    // [...code].forEach(el => el.textContent = el.textContent.replace(/^\n/, ''))
-  }
 };
 </script>
 

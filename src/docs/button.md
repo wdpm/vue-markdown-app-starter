@@ -1,6 +1,6 @@
 <style>
 .my-button {
-  /*margin: 0 10px 10px 0;*/
+  margin: 0 10px 10px 0;
 }
 </style>
 
@@ -12,9 +12,10 @@ console.log("button docs");
 
 ### 基本用法1
 
-:::demo button description 1
+:::demo foo and bar
 ```html 
-<my-button>default</my-button>
+<my-button>foo</my-button>
+<my-button>bar</my-button>
 ```
 :::
 
@@ -22,11 +23,17 @@ console.log("button docs");
 
 :::demo
 ```html 
-<my-button>default 2222</my-button>
+<my-button>baz</my-button>
 ```
 :::
 
 ### options
 
 > options 
+
+```js
+function foo(){
+  return "bar"
+}
+```
 
