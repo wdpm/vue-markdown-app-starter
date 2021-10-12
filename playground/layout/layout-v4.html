@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>layout v4(by grid)</title>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+      }
+
+      /* width */
+      ::-webkit-scrollbar {
+          width: 6px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+          background: #888;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+          background: #555;
+      }
+
+      /* 1. Enable smooth scrolling */
+      html {
+          scroll-padding-top: 60px; /* use value of fixed header height*/
+          scroll-behavior: smooth;
+      }
+
+      /* 2. Make nav sticky */
+      /* 3. ScrollSpy active styles (see JS tab for activation) */
+      .section-nav li.active > a {
+          color: #333;
+          font-weight: 500;
+      }
+
+      /* Sidebar Navigation */
+      .section-nav {
+          position: sticky;
+          top: 84px; /*84 =60(header height) + 24 (margin-top) ; hacking no scroll but fixed position as grid item*/
+          align-self: start;
+          margin-top: 24px;
+          padding-left: 0;
+          border-left: 1px solid #e557c4;
+      }
+
+      .section-nav a {
+          text-decoration: none;
+          display: block;
+          padding: .125rem 0;
+          color: #ccc;
+          transition: all 50ms ease-in-out; /* 💡 This small transition makes setting of the active state smooth */
+      }
+
+      .section-nav a:hover,
+      .section-nav a:focus {
+          color: #666;
+      }
+
+      /** Poor man's reset **/
+      * {
+          box-sizing: border-box;
+      }
+
+      html, body {
+          background: #fff;
+      }
+
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      }
+
+      ul, ol {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+      }
+
+      li {
+          margin-left: 1rem;
+      }
+
+      h1 {
+          font-weight: 300;
+      }
+
+      /** page layout **/
+      main {
+          display: grid;
+          grid-template-columns: max-content 1fr 15em;
+          /*max-width: 100em;*/
+          width: 100%;
+          /*margin: 0 auto;*/
+          position: relative;
+          /*top: 60px;*/
+          padding-top: 60px;
+      }
+
+      /** enlarge the sections for this demo, so that we have a long scrollable page **/
+      section {
+          margin-bottom: 20rem;
+      }
+
+      .warning {
+          padding: 1em;
+          border: 1px solid #ccc;
+          display: block;
+          width: 100%;
+          /*margin: 1rem auto;*/
+          position: fixed;
+          height: 60px;
+          color: white;
+          background: black;
+          z-index: 9;
+      }
+
+      .warning p {
+          margin: 0;
+          padding: 0;
+      }
+
+      .sidebar {
+          position: sticky;
+          max-width: fit-content;
+          background-color: #e8aa95;
+          top: 60px;
+          align-self: start;
+          height: calc(100vh - 60px);
+          overflow-y: scroll;
+      }
+
+      #toggle {
+          border: 1px solid red;
+          display: none;
+      }
+
+      #toggle-menu {
+          display: none;
+          position: relative;
+          top: 60px;
+      }
+
+      @media screen and (max-width: 1000px) {
+          /* change is 2 point: sidebar display and main grid template*/
+          .sidebar {
+              display: none;
+          }
+
+          #toggle {
+              display: inline-block;
+          }
+
+          main {
+              grid-template-columns: 1fr 15em;
+          }
+      }
+
+      #toggle-menu:checked ~ main > .sidebar {
+          /*background-color: #558abb;*/
+          /*display: block;*/
+
+          /* TODO: need to recover main grid layout*/
+      }
+
+  </style>
+</head>
+<body>
+<div class="warning">
+  <!--  <label for="toggle-menu" class="toggle">[toggle]</label>-->
+  <div id="toggle">toggle</div>
+  <p>⚠ This is not the end result but a partial implementation, for demonstration purposes.</p>
+</div>
+<!--<input type="checkbox" id="toggle-menu" name="" value="">-->
+<main>
+  <div class="sidebar">.sidebar
+    <ul>
+      <li><a href="">Nav 1</a></li>
+      <li><a href="">Nav 2</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 333333333333333333333</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">Nav 3</a></li>
+      <li><a href="">end</a></li>
+    </ul>
+  </div>
+  <div class="c">
+    <h1>Smooth Scrolling Sticky
+      <del>ScrollSpy</del>
+      Navigation
+    </h1>
+    <section id="introduction">
+      <h2>Introduction</h2>
+      <p>…</p>
+    </section>
+    <section id="request-response">
+      <h2>Request &amp; Response</h2>
+      <p>…</p>
+    </section>
+    <section id="authentication">
+      <h2>Authentication</h2>
+      <p>…</p>
+    </section>
+    <section id="endpoints">
+      <h2>Endpoints</h2>
+      <section id="endpoints--root">
+        <h3>Root</h3>
+        <p>…</p>
+      </section>
+      <section id="endpoints--cities-overview">
+        <h3>Cities Overview</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate eos hic illo iure labore nam
+          officiis omnis porro praesentium quis quo sint sit suscipit, tempore totam voluptates! Alias autem corporis,
+          dicta distinctio dolorem doloremque doloribus earum impedit itaque magnam maiores odio omnis perferendis
+          praesentium, quas, quibusdam repudiandae tempora vel velit veniam? Accusantium aliquam autem consequatur
+          dolorum inventore obcaecati odit quas sequi. Amet atque autem beatae dolorem ducimus expedita fugiat iste
+          libero, mollitia nobis perferendis praesentium quas quasi sapiente, soluta! Alias at commodi consectetur
+          consequuntur cum cumque dicta dignissimos dolorem dolores eaque earum eos eum explicabo, facere iste itaque
+          minima molestiae nam, optio quam quibusdam quos saepe sit soluta tenetur ut veniam! A, accusantium consequatur
+          consequuntur culpa facilis impedit iusto laborum minus mollitia nihil non omnis possimus quis recusandae
+          repellat! Aut maiores tempore velit vitae. Consequuntur doloremque dolorum et explicabo iste laudantium
+          officia placeat repellendus! Accusantium adipisci cum dolorem inventore ipsum libero magni odit voluptate.
+          Accusantium atque beatae cumque debitis dolores excepturi explicabo natus obcaecati possimus provident, qui
+          repellat tenetur vitae! Cumque ex officiis sapiente. Asperiores aut culpa deleniti distinctio in laudantium
+          quis sed veniam voluptates voluptatum. Deserunt, eum iste, laborum minima nemo pariatur praesentium quisquam
+          rem soluta sunt totam?</p>
+      </section>
+      <section id="endpoints--city-detail">
+        <h3>City Detail</h3>
+        <p>…</p>
+      </section>
+      <section id="endpoints--city-config">
+        <h3>City Config</h3>
+        <p>…</p>
+      </section>
+      <section id="endpoints--city-spots-overview">
+        <h3>City Spots Overview</h3>
+        <p>…</p>
+      </section>
+      <section id="endpoints--city-spot-detail">
+        <h3>City Spot Detail</h3>
+        <p>…</p>
+      </section>
+      <section id="endpoints--city-icons-overview">
+        <h3>City Icons Overview</h3>
+        <p>…</p>
+      </section>
+      <section id="endpoints--city-icon-detail">
+        <h3>City Icon Detail</h3>
+        <p>…</p>
+      </section>
+    </section>
+    <section id="links">
+      <h2>Links</h2>
+      <p>…</p>
+    </section>
+    <section id="expanders">
+      <h2>Expanders</h2>
+      <p>…</p>
+    </section>
+    <section id="filters">
+      <h2>Filters</h2>
+      <p>…</p>
+    </section>
+  </div>
+  <nav class="section-nav">
+    <ol>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#request-response">Request &amp; Response</a></li>
+      <li><a href="#authentication">Authentication</a></li>
+      <li><a href="#endpoints">Endpoints</a>
+        <ul>
+          <li class=""><a href="#endpoints--root">Root</a></li>
+          <li class=""><a href="#endpoints--cities-overview">Cities Overview</a></li>
+          <li class=""><a href="#endpoints--city-detail">City Detail</a></li>
+          <li class=""><a href="#endpoints--city-config">City Config</a></li>
+          <li class=""><a href="#endpoints--city-spots-overview">City Spots Overview</a></li>
+          <li class=""><a href="#endpoints--city-spot-detail">City Spot Detail</a></li>
+          <li class=""><a href="#endpoints--city-icons-overview">City Icons Overview</a></li>
+          <li class=""><a href="#endpoints--city-icon-detail">City Icon Detail</a></li>
+        </ul>
+      </li>
+      <li class=""><a href="#links">Links</a></li>
+      <li class=""><a href="#expanders">Expanders</a></li>
+      <li class=""><a href="#filters">Filters</a></li>
+    </ol>
+  </nav>
+</main>
+<script>
+  // sync toc when scroll html
+  window.addEventListener("DOMContentLoaded", () => {
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const id = entry.target.getAttribute("id");
+        if (entry.intersectionRatio > 0) {
+          document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.add("active");
+        } else {
+          document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.remove("active");
+        }
+      });
+    });
+
+    // Track all sections that have an `id` applied
+    document.querySelectorAll("section[id]").forEach((section) => {
+      observer.observe(section);
+    });
+
+  });
+
+  let toggle = document.getElementById("toggle");
+
+  let main = document.getElementsByTagName("main");
+  const sidebar = document.querySelector(".sidebar");
+  let toggleVisible = false;
+  let sidebarVisible = true;
+
+  toggle.addEventListener("click", function(evt) {
+    const status = toggle.classList.contains("active");
+    console.log("toggle before status:", status);
+
+    if (!status) {
+      main[0].style.gridTemplateColumns = "max-content 1fr 15em";
+      sidebar.style.display = "block";
+      toggle.classList.add("active");
+    } else {
+      main[0].style.gridTemplateColumns = "1fr 15em";
+      sidebar.style.display = "none";
+      toggle.classList.remove("active");
+    }
+  });
+
+  var mql = window.matchMedia("(min-width: 1000px)");
+  function resetStyle(e) {
+    if (e && e.matches) {
+      //>= 1000px
+      document.body.style.backgroundColor = "rgba(255,0,0,.2)";
+      main[0].style.gridTemplateColumns = "";
+      sidebar.style.display = "";
+      //remove toggle active class if has= 解除toggle激活状态
+      toggle.classList.toggle("active", false);
+    } else {
+      document.body.style.backgroundColor = "rgba(0,0,255,.2)";
+    }
+  }
+  mql.addEventListener("change", resetStyle);
+</script>
+</body>
+</html>
