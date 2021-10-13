@@ -10,6 +10,8 @@ console.log("button docs");
 
 ## button
 
+[[toc]]
+
 ### 基本用法1
 
 :::demo foo and bar

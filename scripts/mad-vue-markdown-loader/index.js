@@ -89,6 +89,7 @@ module.exports = function(source) {
   if (typeof opts.render === "function") {
     parser = opts;
   } else {
+    // default markdown-it setting
     opts = Object.assign(
       {
         preset: "default",

@@ -1,5 +1,13 @@
 const markdownRender = require("markdown-it")();
 
+const uslug = require("uslug");
+
+// remove % symbol
+// example： %E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%951 to 基本用法
+function uslugify(s) {
+  return uslug(s);
+}
+
 module.exports = {
   transpileDependencies: true,
   configureWebpack: {
@@ -41,7 +49,9 @@ module.exports = {
                   let demoInfo = tokens[idx].info.trim().match(/^demo\s+(.*)$/);
                   let description =
                     demoInfo && demoInfo.length > 1 ? demoInfo[1] : "";
-                  let descriptionHTML = description ? markdownRender.render(description) : "";
+                  let descriptionHTML = description
+                    ? markdownRender.render(description)
+                    : "";
 
                   // 2.获取代码块内的html和js代码
                   let content = tokens[idx + 1].content;
@@ -64,6 +74,30 @@ module.exports = {
                   return "</template></div></demo-block>\n";
                 }
               }
+            }
+          ],
+          [
+            require("markdown-it-toc-done-right"),
+            {
+              slugify: uslugify,
+              // Generate toc in separate div #27
+              // https://github.com/nagaozen/markdown-it-toc-done-right/issues/27
+              callback: (html, ast) => {
+                console.log(html);
+              }
+            }
+          ],
+          [
+            require("markdown-it-anchor"),
+            // <a class="header-anchor" href="#options"> -> </a>
+            {
+              level: [2, 3],
+              slugify: uslugify,
+              permalink: true,
+              // renderPermalink: (slug, opts, state, permalink) => {},
+              permalinkClass: "header-anchor",
+              permalinkSymbol: "->",
+              permalinkBefore: true
             }
           ]
         ]

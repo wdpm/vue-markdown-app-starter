@@ -262,6 +262,23 @@ li {
   margin-left: 1rem;
 }
 
+// toc item style
+.table-of-contents {
+  ol {
+    counter-reset: list-item;
+  }
+
+  li {
+    display: block;
+    counter-increment: list-item;
+  }
+
+  li:before {
+    content: counters(list-item, '.') ' ';
+  }
+}
+
+
 /** page layout **/
 main {
   display: grid;
@@ -275,7 +292,7 @@ main {
 
 /** enlarge the sections for this demo, so that we have a long scrollable page **/
 section {
-  margin-bottom: 20rem;
+  //margin-bottom: 20rem;
 }
 
 .nav {
