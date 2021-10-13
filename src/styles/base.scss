@@ -21,9 +21,14 @@ html, body {
   scroll-behavior: smooth;
 }
 
-// scrollbar style
+// scrollbar style of vertical bar
 ::-webkit-scrollbar {
   width: 6px;
+}
+
+// scrollbar style of horizontal bar
+::-webkit-scrollbar:horizontal {
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {

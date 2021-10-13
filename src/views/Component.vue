@@ -65,30 +65,28 @@
 export default {
   name: "Component",
   mounted() {
-    // sync toc when scroll html
-    window.addEventListener("DOMContentLoaded", () => {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          const id = entry.target.getAttribute("id");
-          if (entry.intersectionRatio > 0) {
-            document
-              .querySelector(`.toc li a[href="#${id}"]`)
-              .parentElement.classList.add("active");
-          } else {
-            document
-              .querySelector(`.toc li a[href="#${id}"]`)
-              .parentElement.classList.remove("active");
-          }
-        });
-      });
-
-      // Track all sections that have an `id` applied
-      document.querySelectorAll("section[id]").forEach((section) => {
-        observer.observe(section);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.getAttribute("id");
+        const anchorLink = document.querySelector(`.toc li a[href="#${id}"]`);
+        if (entry.intersectionRatio > 0) {
+          anchorLink.parentElement.classList.add("active");
+        } else {
+          anchorLink.parentElement.classList.remove("active");
+        }
       });
     });
 
-    const tableOfContent = document.querySelector("html .markdown-body section html .table-of-contents");
+    // Track all headers that have an `id` applied
+    // alternatives selector: h1,h2,... with[id]
+    const anchors = document.querySelectorAll(".header-anchor");
+    anchors.forEach((section) => {
+      observer.observe(section.parentElement);
+    });
+
+    const tableOfContent = document.querySelector(
+      "html .markdown-body section html .table-of-contents"
+    );
     const toc = document.querySelector(".toc");
     toc.appendChild(tableOfContent.cloneNode(true));
 
@@ -123,7 +121,7 @@ export default {
         nav.style.display = "";
         //remove toggle active class if it has= 解除toggle激活状态
         toggle.classList.toggle("active", false);
-        console.log("reset style on", e.matches);
+        // console.log("reset style on", e.matches);
       }
     }
 
@@ -134,6 +132,27 @@ export default {
 </script>
 
 <style lang="scss">
+// override github-markdown-css
+.markdown-body {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 45px;
+}
+
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
+  }
+}
+
+.markdown-body .highlight {
+  margin-bottom: 0;
+}
+
+// app.css
 .header {
   padding: 1em;
   border: 1px solid #ccc;
@@ -156,57 +175,6 @@ export default {
   }
 }
 
-// override github-markdown-css
-.markdown-body {
-  box-sizing: border-box;
-  width: 100%;
-  min-width: 200px;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 24px 45px;
-}
-
-@media (max-width: 767px) {
-  .markdown-body {
-    padding: 15px;
-  }
-}
-
-.markdown-body .highlight {
-  margin-bottom: 0;
-}
-
-// app.css
-/* 2. Make nav sticky */
-/* 3. ScrollSpy active styles (see JS tab for activation) */
-.toc li.active > a {
-  color: #333;
-  font-weight: 500;
-}
-
-/* nav Navigation */
-.toc {
-  position: sticky;
-  top: 84px; /*84 =60(header height) + 24 (margin-top) ; hacking no scroll but fixed position as grid item*/
-  align-self: start;
-  margin-top: 24px;
-  padding-left: 0;
-  border-left: 1px solid #e557c4;
-}
-
-.toc a {
-  text-decoration: none;
-  display: inline-block;
-  padding: 0.125rem 0;
-  color: #ccc;
-  transition: all 50ms ease-in-out; /* 💡 This small transition makes setting of the active state smooth */
-}
-
-.toc a:hover,
-.toc a:focus {
-  color: #666;
-}
-
 ul,
 ol {
   list-style: none;
@@ -218,7 +186,36 @@ li {
   margin-left: 1rem;
 }
 
-// toc item style
+.toc {
+  position: sticky;
+  top: 84px; /*84 =60(header height) + 24 (margin-top) ; hacking no scroll but fixed position as grid item*/
+  align-self: start;
+  max-height: 80vh;
+  margin-top: 24px;
+  padding-left: 0;
+  border-left: 1px solid #e557c4;
+  overflow-y: scroll;
+
+  li.active > a {
+    color: #333;
+    font-weight: 500;
+  }
+
+  a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.125rem 0;
+    color: #ccc;
+    transition: all 50ms ease-in-out; /* 💡 This small transition makes setting of the active state smooth */
+
+    :hover,
+    :focus {
+      color: #666;
+    }
+  }
+}
+
+// markdown toc item style
 .table-of-contents {
   ol {
     counter-reset: list-item;
@@ -238,21 +235,14 @@ li {
 main {
   display: grid;
   grid-template-columns: max-content 1fr 15em;
-  /*max-width: 100em;*/
   width: 100%;
   position: relative;
   padding-top: 60px;
   transition: all 2s;
 }
 
-/** enlarge the sections for this demo, so that we have a long scrollable page **/
-section {
-  //margin-bottom: 20rem;
-}
-
 .nav {
   position: sticky;
-  //background-color: #e8aa95;
   border-right: 1px solid darkgrey;
   top: 60px;
   align-self: start;
