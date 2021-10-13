@@ -102,6 +102,7 @@
           position: relative;
           /*top: 60px;*/
           padding-top: 60px;
+          transition: all 2s;
       }
 
       /** enlarge the sections for this demo, so that we have a long scrollable page **/
@@ -148,9 +149,11 @@
           top: 60px;
       }
 
-      @media screen and (max-width: 1000px) {
-          /* change is 2 point: sidebar display and main grid template*/
-          .sidebar {
+      @media screen and (max-width: 1200px) {
+          /*.sidebar {*/
+          /*    display: none;*/
+          /*}*/
+          .section-nav {
               display: none;
           }
 
@@ -159,7 +162,14 @@
           }
 
           main {
-              grid-template-columns: 1fr 15em;
+              grid-template-columns: max-content 1fr 0;
+          }
+      }
+
+      @media screen and (max-width: 999px) {
+
+          main {
+              grid-template-columns: 0 1fr 0;
           }
       }
 
@@ -354,38 +364,43 @@
 
   let main = document.getElementsByTagName("main");
   const sidebar = document.querySelector(".sidebar");
-  let toggleVisible = false;
-  let sidebarVisible = true;
 
+  /* max-content 1fr 15em -> max-content 1fr 0 ->  0 1fr 0 */
   toggle.addEventListener("click", function(evt) {
     const status = toggle.classList.contains("active");
-    console.log("toggle before status:", status);
-
+    // console.log("toggle before status:", status);
     if (!status) {
-      main[0].style.gridTemplateColumns = "max-content 1fr 15em";
+      // change to middle state max-content 1fr 0
+      main[0].style.gridTemplateColumns = "max-content 1fr 0";
       sidebar.style.display = "block";
       toggle.classList.add("active");
     } else {
-      main[0].style.gridTemplateColumns = "1fr 15em";
-      sidebar.style.display = "none";
+      main[0].style.gridTemplateColumns = "0 1fr 0";
+      sidebar.style.display = "";
       toggle.classList.remove("active");
     }
   });
 
-  var mql = window.matchMedia("(min-width: 1000px)");
+  // listen for two break point and recover when come across these points
+  var mql = window.matchMedia("(min-width: 1200px)");
+  var mql2 = window.matchMedia("(min-width: 999px)");
+
   function resetStyle(e) {
     if (e && e.matches) {
-      //>= 1000px
       document.body.style.backgroundColor = "rgba(255,0,0,.2)";
+      // reset previous css style
       main[0].style.gridTemplateColumns = "";
       sidebar.style.display = "";
       //remove toggle active class if has= 解除toggle激活状态
       toggle.classList.toggle("active", false);
+      console.log("reset style on", e.matches);
     } else {
       document.body.style.backgroundColor = "rgba(0,0,255,.2)";
     }
   }
+
   mql.addEventListener("change", resetStyle);
+  mql2.addEventListener("change", resetStyle);
 </script>
 </body>
 </html>
