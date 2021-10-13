@@ -32,6 +32,11 @@ module.exports = {
           // do any thing
           return source;
         },
+        postprocess: function(markdownIt, source) {
+          // do any thing
+          // console.log(source);
+          return source;
+        },
         use: [
           [
             require("markdown-it-container"),
@@ -83,7 +88,9 @@ module.exports = {
               // Generate toc in separate div #27
               // https://github.com/nagaozen/markdown-it-toc-done-right/issues/27
               callback: (html, ast) => {
-                console.log(html);
+                // console.log(html);
+                // It's possible to hook on the callback option and move the entire TOC into an <aside> if you want to.
+                // BUT can't render to external html div container because OUT of markdown page context!
               }
             }
           ],
@@ -91,12 +98,12 @@ module.exports = {
             require("markdown-it-anchor"),
             // <a class="header-anchor" href="#options"> -> </a>
             {
-              level: [2, 3],
+              level: [2, 3, 4],
               slugify: uslugify,
               permalink: true,
               // renderPermalink: (slug, opts, state, permalink) => {},
               permalinkClass: "header-anchor",
-              permalinkSymbol: "->",
+              permalinkSymbol: "◈",//https://copypastecharacter.com/graphic-shapes
               permalinkBefore: true
             }
           ]

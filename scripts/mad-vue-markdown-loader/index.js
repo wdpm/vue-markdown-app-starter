@@ -69,7 +69,7 @@ const renderVueTemplate = (html, wrapper) => {
 
 module.exports = function(source) {
   this.cacheable && this.cacheable();
-  let parser, preprocess;
+  let parser, preprocess,postprocess;
   const params = loaderUtils.getOptions(this) || {};
   // NEED debug: this._compilation.__vueMarkdownOptions__
   const vueMarkdownOptions = (this._compilation && this._compilation.__vueMarkdownOptions__) || {};
@@ -102,11 +102,13 @@ module.exports = function(source) {
 
     // if has webpack plugins
     const plugins = opts.use;
-    // if has preprocess function
+    // if has process function
     preprocess = opts.preprocess;
+    postprocess = opts.postprocess;
 
     delete opts.use;
     delete opts.preprocess;
+    delete opts.postprocess;
 
     parser = markdown(opts.preset, opts);
 
@@ -175,8 +177,11 @@ module.exports = function(source) {
   source = source.replace(/@/g, "__at__");
   // 渲染完md之后，就把@符号恢复，后续会交给vue-loader
   const content = parser.render(source).replace(/__at__/g, "@");
+  let result = renderVueTemplate(content, opts.wrapper);
 
-  const result = renderVueTemplate(content, opts.wrapper);
+  if (postprocess) {
+    result = postprocess.call(this, parser, result);
+  }
 
   if (opts.raw) {
     return result;

@@ -1,0 +1,104 @@
+<template>
+  <section>
+    <html>
+    <head>
+
+    </head>
+    <body><h2 id="button" tabindex="-1"><a class="header-anchor" href="#button">◈</a> button</h2>
+    <nav class="table-of-contents">
+      <ol>
+        <li><a href="#button">button</a>
+          <ol>
+            <li><a href="#基本用法1">基本用法1</a></li>
+            <li><a href="#基本用法2">基本用法2</a></li>
+            <li><a href="#options">opti
+              ons</a></li>
+          </ol>
+        </li>
+      </ol>
+    </nav>
+    <h3 id="基本用法1" tabindex="-1"><a class="header-anchor" href="#基本用法1">◈</a> 基本用法1</h3>
+    <demo-block>
+      <template v-slot:source="">
+        <div class="source">
+          <my-button>foo</my-button>
+          <my-button>bar</my-button>
+        </div>
+      </template>
+      <p>foo and bar</p>
+      <template v-slot:highlight="">
+        <div class="highlight">
+          <!--这里就是显示代码片段的地方-->
+          <pre v-pre=""><code v-pre="" class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">my-button</span>&gt;</span>foo<span
+            class="hljs-tag">&
+lt;/<span class="hljs-name">my-button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">my-button</span>&gt;</span>bar<span class="hljs-tag">&lt;/<span
+              class="hljs-name">my-button</span>&gt;</span>
+</code></pre>
+        </div>
+      </template>
+    </demo-block>
+    <h3 id="基本用法2" tabindex="-1"><a class="header-anchor" href="#基本用法2">◈</a> 基本用法2</h3>
+    <demo-block>
+      <template v-slot:source="">
+        <div class="source">
+          <my-button>baz</my-button>
+        </div>
+      </template>
+
+
+      <template v-slot:highlight="">
+        <div class="highlight">
+          <!--这里就是显示代码片段的地方-->
+          <pre v-pre=""><code v-pre="" class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">my-button</span>&gt;</span>baz<span
+            class="hljs-tag">&
+lt;/<span class="hljs-name">my-button</span>&gt;</span>
+</code></pre>
+        </div>
+      </template>
+    </demo-block>
+    <h3 id="options" tabindex="-1"><a class="header-anchor" href="#options">◈</a> options</h3>
+    <blockquote>
+      <p>options</p>
+    </blockquote>
+    <pre v-pre=""><code v-pre="" class="language-js"><span class="hljs-keyword">function</span> <span
+      class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-string">"bar"</span>
+}
+</code></pre>
+    <blockquote>
+      <p>options</p>
+    </blockquote>
+    <pre v-pre=""><code v-pre="" class="language-js"><span class="hljs-keyword">function</span> <span
+      class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-string">"bar"</span>
+}
+</code></pre>
+    <blockquote>
+      <p>options</p>
+    </blockquote>
+    <pre v-pre=""><code v-pre="" class="language-js"><span class="hljs-keyword">function</span> <span
+      class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-string">"bar"</span>
+}
+</code></pre>
+    <blockquote>
+      <p>options</p>
+    </blockquote>
+    <pre v-pre=""><code v-pre="" class="language-js"><span class="hljs-keyword">function</span> <span
+      class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-string">"bar"</span>
+}
+</code></pre>
+    </body>
+    </html>
+  </section>
+</template>
+<style>
+    .my-button {
+        margin: 0 10px 10px 0;
+    }
+</style>
+<script>
+  console.log("button docs");
+</script>

@@ -4,7 +4,9 @@
     <p>
       For a guide and recipes on how to use,<br />
       check out the
-      <router-link to="/about/button">button</router-link>
+      <router-link to="/component/button">button</router-link>
+      |
+      <router-link to="/component/test">test</router-link>
     </p>
   </div>
 </template>
