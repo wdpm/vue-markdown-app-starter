@@ -10,12 +10,6 @@
 - canjs
 - rxjs
 
-### online-designer
-- https://griddy.io/
-- https://grid.layoutit.com/
-- https://cssgrid-generator.netlify.app/
-- https://cssgr.id/
-
 ### guide
 - https://mozilladevelopers.github.io/playground/css-grid
 - https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Realizing_common_layouts_using_CSS_Grid_Layout

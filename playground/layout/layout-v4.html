@@ -7,6 +7,13 @@
       * {
           margin: 0;
           padding: 0;
+          box-sizing: border-box;
+      }
+
+      /* 1. Enable smooth scrolling */
+      html {
+          scroll-padding-top: 60px; /* use value of fixed header height*/
+          scroll-behavior: smooth;
       }
 
       /* width */
@@ -29,21 +36,16 @@
           background: #555;
       }
 
-      /* 1. Enable smooth scrolling */
-      html {
-          scroll-padding-top: 60px; /* use value of fixed header height*/
-          scroll-behavior: smooth;
-      }
 
       /* 2. Make nav sticky */
       /* 3. ScrollSpy active styles (see JS tab for activation) */
-      .section-nav li.active > a {
+      .toc li.active > a {
           color: #333;
           font-weight: 500;
       }
 
-      /* Sidebar Navigation */
-      .section-nav {
+      /* nav Navigation */
+      .toc {
           position: sticky;
           top: 84px; /*84 =60(header height) + 24 (margin-top) ; hacking no scroll but fixed position as grid item*/
           align-self: start;
@@ -52,7 +54,7 @@
           border-left: 1px solid #e557c4;
       }
 
-      .section-nav a {
+      .toc a {
           text-decoration: none;
           display: block;
           padding: .125rem 0;
@@ -60,22 +62,9 @@
           transition: all 50ms ease-in-out; /* 💡 This small transition makes setting of the active state smooth */
       }
 
-      .section-nav a:hover,
-      .section-nav a:focus {
+      .toc a:hover,
+      .toc a:focus {
           color: #666;
-      }
-
-      /** Poor man's reset **/
-      * {
-          box-sizing: border-box;
-      }
-
-      html, body {
-          background: #fff;
-      }
-
-      body {
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
       }
 
       ul, ol {
@@ -88,19 +77,13 @@
           margin-left: 1rem;
       }
 
-      h1 {
-          font-weight: 300;
-      }
-
       /** page layout **/
       main {
           display: grid;
           grid-template-columns: max-content 1fr 15em;
           /*max-width: 100em;*/
           width: 100%;
-          /*margin: 0 auto;*/
           position: relative;
-          /*top: 60px;*/
           padding-top: 60px;
           transition: all 2s;
       }
@@ -110,7 +93,7 @@
           margin-bottom: 20rem;
       }
 
-      .warning {
+      .header {
           padding: 1em;
           border: 1px solid #ccc;
           display: block;
@@ -123,14 +106,8 @@
           z-index: 9;
       }
 
-      .warning p {
-          margin: 0;
-          padding: 0;
-      }
-
-      .sidebar {
+      .nav {
           position: sticky;
-          max-width: fit-content;
           background-color: #e8aa95;
           top: 60px;
           align-self: start;
@@ -143,17 +120,8 @@
           display: none;
       }
 
-      #toggle-menu {
-          display: none;
-          position: relative;
-          top: 60px;
-      }
-
       @media screen and (max-width: 1200px) {
-          /*.sidebar {*/
-          /*    display: none;*/
-          /*}*/
-          .section-nav {
+          .toc {
               display: none;
           }
 
@@ -173,24 +141,15 @@
           }
       }
 
-      #toggle-menu:checked ~ main > .sidebar {
-          /*background-color: #558abb;*/
-          /*display: block;*/
-
-          /* TODO: need to recover main grid layout*/
-      }
-
   </style>
 </head>
 <body>
-<div class="warning">
-  <!--  <label for="toggle-menu" class="toggle">[toggle]</label>-->
+<div class="header">
   <div id="toggle">toggle</div>
   <p>⚠ This is not the end result but a partial implementation, for demonstration purposes.</p>
 </div>
-<!--<input type="checkbox" id="toggle-menu" name="" value="">-->
 <main>
-  <div class="sidebar">.sidebar
+  <div class="nav">
     <ul>
       <li><a href="">Nav 1</a></li>
       <li><a href="">Nav 2</a></li>
@@ -236,7 +195,7 @@
       <li><a href="">end</a></li>
     </ul>
   </div>
-  <div class="c">
+  <div class="content-body">
     <h1>Smooth Scrolling Sticky
       <del>ScrollSpy</del>
       Navigation
@@ -315,7 +274,7 @@
       <p>…</p>
     </section>
   </div>
-  <nav class="section-nav">
+  <div class="toc">
     <ol>
       <li><a href="#introduction">Introduction</a></li>
       <li><a href="#request-response">Request &amp; Response</a></li>
@@ -336,7 +295,7 @@
       <li class=""><a href="#expanders">Expanders</a></li>
       <li class=""><a href="#filters">Filters</a></li>
     </ol>
-  </nav>
+  </div>
 </main>
 <script>
   // sync toc when scroll html
@@ -346,9 +305,9 @@
       entries.forEach(entry => {
         const id = entry.target.getAttribute("id");
         if (entry.intersectionRatio > 0) {
-          document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.add("active");
+          document.querySelector(`.toc li a[href="#${id}"]`).parentElement.classList.add("active");
         } else {
-          document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.remove("active");
+          document.querySelector(`.toc li a[href="#${id}"]`).parentElement.classList.remove("active");
         }
       });
     });
@@ -361,9 +320,8 @@
   });
 
   let toggle = document.getElementById("toggle");
-
   let main = document.getElementsByTagName("main");
-  const sidebar = document.querySelector(".sidebar");
+  const nav = document.querySelector(".nav");
 
   /* max-content 1fr 15em -> max-content 1fr 0 ->  0 1fr 0 */
   toggle.addEventListener("click", function(evt) {
@@ -372,11 +330,11 @@
     if (!status) {
       // change to middle state max-content 1fr 0
       main[0].style.gridTemplateColumns = "max-content 1fr 0";
-      sidebar.style.display = "block";
+      nav.style.display = "block";
       toggle.classList.add("active");
     } else {
       main[0].style.gridTemplateColumns = "0 1fr 0";
-      sidebar.style.display = "";
+      nav.style.display = "";
       toggle.classList.remove("active");
     }
   });
@@ -390,7 +348,7 @@
       document.body.style.backgroundColor = "rgba(255,0,0,.2)";
       // reset previous css style
       main[0].style.gridTemplateColumns = "";
-      sidebar.style.display = "";
+      nav.style.display = "";
       //remove toggle active class if has= 解除toggle激活状态
       toggle.classList.toggle("active", false);
       console.log("reset style on", e.matches);
