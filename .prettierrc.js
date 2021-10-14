@@ -5,7 +5,7 @@
 module.exports = {
   trailingComma: "none",
   tabWidth: 2,
-  printWidth: 80,
+  printWidth: 120, //80 is too low
   endOfLine: "auto",
   semi: true,
   singleQuote: false,
