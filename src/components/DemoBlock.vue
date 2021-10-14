@@ -37,7 +37,7 @@ export default {
     return {
       showCode: false
     };
-  },
+  }
 };
 </script>
 
@@ -145,7 +145,6 @@ export default {
       font-size: 14px;
     }
   }
-
 }
 
 .sh-checkbox {

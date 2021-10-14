@@ -28,11 +28,11 @@ module.exports = {
       .loader("./scripts/mad-vue-markdown-loader/index.js")
       .options({
         raw: true,
-        preprocess: function(markdownIt, source) {
+        preprocess: function (markdownIt, source) {
           // do any thing
           return source;
         },
-        postprocess: function(markdownIt, source) {
+        postprocess: function (markdownIt, source) {
           // do any thing
           // console.log(source);
           return source;
@@ -42,11 +42,11 @@ module.exports = {
             require("markdown-it-container"),
             "demo",
             {
-              validate: function(params) {
+              validate: function (params) {
                 return params.trim().match(/^demo\s*(.*)$/);
               },
 
-              render: function(tokens, idx) {
+              render: function (tokens, idx) {
                 // open tags
                 if (tokens[idx].nesting === 1) {
                   // 1.获取第一行的内容使用markdown渲染html作为组件的描述
@@ -103,7 +103,7 @@ module.exports = {
               permalink: true,
               // renderPermalink: (slug, opts, state, permalink) => {},
               permalinkClass: "header-anchor",
-              permalinkSymbol: "◈",//https://copypastecharacter.com/graphic-shapes
+              permalinkSymbol: "◈", //https://copypastecharacter.com/graphic-shapes
               permalinkBefore: true
             }
           ]

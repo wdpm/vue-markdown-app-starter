@@ -2,10 +2,10 @@
 
 ## our goal
 
-- [x] A sticky header.
+- [x] A fixed header.
   > position: fixed
 - [x] A sticky, flexible-width sidebar.
-  > gird template column: max-content
+  > gird template column: max-content + position: sticky
 - [x] A flexible main content container (that changes width based on the content of the sidebar)
   > gird template column: 1fr
 - [x] The sidebar and main content container scroll independently.

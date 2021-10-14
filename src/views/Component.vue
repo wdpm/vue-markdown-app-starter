@@ -6,7 +6,7 @@
       |
       <router-link to="/about">About</router-link>
     </header>
-    <main>
+    <main class="main">
       <nav class="nav">
         <ul>
           <li><a href="">Nav 1</a></li>
@@ -95,7 +95,7 @@ export default {
     const nav = document.querySelector(".nav");
 
     /* max-content 1fr 15em -> max-content 1fr 0 ->  0 1fr 0 */
-    toggle.addEventListener("click", function(evt) {
+    toggle.addEventListener("click", function (evt) {
       const status = toggle.classList.contains("active");
       // console.log("toggle before status:", status);
       if (!status) {

@@ -1,10 +1,10 @@
 <template>
-  <router-view />
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
-<script>
-
-</script>
+<script></script>
 
 <style lang="scss">
 // https://github.com/sindresorhus/github-markdown-css
@@ -13,7 +13,6 @@
 @import "~highlight.js/styles/github.css";
 
 @import "styles/base";
-
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
