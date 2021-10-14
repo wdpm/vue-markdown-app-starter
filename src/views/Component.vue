@@ -35,7 +35,7 @@
           <li><a href="">Nav 3</a></li>
           <li><a href="">Nav 3</a></li>
           <li><a href="">Nav 3</a></li>
-          <li><a href="">Nav 333333333333333333333</a></li>
+          <li><a href="">Lorem ipsum dolor sit amet.</a></li>
           <li><a href="">Nav 3</a></li>
           <li><a href="">Nav 3</a></li>
           <li><a href="">Nav 3</a></li>
@@ -56,7 +56,7 @@
       <article class="markdown-body">
         <router-view />
       </article>
-      <aside class="toc"></aside>
+      <aside class="toc">TOC here</aside>
     </main>
   </div>
 </template>
@@ -111,7 +111,6 @@ export default {
       const toc = document.querySelector(".toc");
       toc.appendChild(tableOfContent.cloneNode(true));
     },
-    // TODO: refactor to vue style @click
     setupToggleMenu() {
       const toggle = document.getElementById("toggle");
       const main = document.getElementsByTagName("main");
@@ -226,7 +225,7 @@ export default {
 
 .toc {
   position: sticky;
-  top: 84px; /*84 =60(header height) + 24 (margin-top) ; hacking no scroll but fixed position as grid item*/
+  top: 84px; /*84 =60(header height) + 24 (margin-top);*/
   align-self: start;
   max-height: 80vh;
   margin-top: 24px;
