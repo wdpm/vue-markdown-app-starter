@@ -53,9 +53,12 @@
           <li><a href="">end</a></li>
         </ul>
       </nav>
-      <article class="markdown-body">
-        <router-view />
-      </article>
+      <div class="center">
+        <article class="markdown-body">
+          <router-view />
+        </article>
+        <!-- footer -->
+      </div>
       <aside class="toc">TOC here</aside>
     </main>
   </div>
@@ -161,9 +164,7 @@ export default {
 // override github-markdown-css
 .markdown-body {
   box-sizing: border-box;
-  width: 100%;
   min-width: 200px;
-  max-width: 980px;
   margin: 0 auto;
   padding: 24px 45px;
 }
@@ -223,12 +224,17 @@ export default {
   overflow-y: scroll;
 }
 
+.center {
+  overflow: hidden;
+}
+
 .toc {
   position: sticky;
+  margin-top: 24px;
   top: 84px; /*84 =60(header height) + 24 (margin-top);*/
+  right: 24px;
   align-self: start;
   max-height: 80vh;
-  margin-top: 24px;
   padding-left: 0;
   border-left: 1px solid #e557c4;
   overflow-y: auto;
