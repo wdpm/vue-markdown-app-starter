@@ -67,12 +67,12 @@ module.exports = {
                                 <template v-slot:source>
                                     <div class="source">${content}</div>
                                 </template>
-                                
+
                                 ${descriptionHTML}
-                                
+
                                 <template v-slot:highlight>
                                   <div class="highlight">
-                                  <!--这里就是显示代码片段的地方-->                            
+                                  <!--这里就是显示代码片段的地方-->
                             `;
                 } else {
                   // close tags must put here
@@ -101,10 +101,10 @@ module.exports = {
               level: [2, 3, 4],
               slugify: uslugify,
               permalink: true,
-              // renderPermalink: (slug, opts, state, permalink) => {},
               permalinkClass: "header-anchor",
               permalinkSymbol: "◈", //https://copypastecharacter.com/graphic-shapes
               permalinkBefore: true
+              // renderPermalink: (slug, opts, state, permalink) => {},
             }
           ]
         ]
