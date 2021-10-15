@@ -19,7 +19,6 @@
 </template>
 
 <script>
-// https://next.vue-test-utils.vuejs.org/guide/essentials/forms.html#working-with-various-form-elements
 export default {
   data() {
     return {
