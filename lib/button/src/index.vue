@@ -55,11 +55,11 @@ const useClass = ({ props, loading }) => {
 };
 
 const isDisabled = computed(() => props.loading || props.disabled);
-const { loading, icon } = toRefs(props);
-const className = useClass({ props, loading, icon });
+const { loading } = toRefs(props);
+const className = useClass({ props, loading });
 
 const style = computed(() => {
-  return props.loading ? { opacity: "0", transform: "scale(2.2)" } : {};
+  return props.loading ? { opacity: "0" } : {};
 });
 </script>
 

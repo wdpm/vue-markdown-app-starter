@@ -20,61 +20,65 @@ export default {
 
 [[toc]]
 
-### 基本用法1
+### type
 
-:::demo foo and bar
-
-```html
-<mad-button @click="print">foo</mad-button>
-<mad-button>bar</mad-button>
+:::demo 语义类型
+``` html
+<mad-button>basic</mad-button>
+<mad-button type="success">success</mad-button>
 ```
-
 :::
 
-### 基本用法2
+### size
 
-:::demo
-
-```html
-<mad-button @click="print">baz</mad-button>
+:::demo 大小
+``` html
+<mad-button size="lg">lg</mad-button>
 ```
+:::
 
+### icon
+
+:::demo icon
+``` html
+<mad-button icon="home">home icon</mad-button>
+```
+:::
+
+### loading
+
+:::demo 加载中
+``` html
+<mad-button loading>loading</mad-button>
+```
 :::
 
 ### options
 
 > options
-
 ```js
 function foo() {
   return "bar"
 }
 ```
-
 > options
-
 ```js
 function foo() {
   return "bar"
 }
 ```
-
 > options
-
 ```js
 function foo() {
   return "bar"
 }
 ```
-
 > options
-
 ```js
 function foo() {
   return "bar"
 }
 ```
-
 #### title 4 level
 
 > some desc
