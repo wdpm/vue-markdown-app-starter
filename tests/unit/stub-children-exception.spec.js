@@ -20,7 +20,7 @@ const ComplexComponent = {
 test("shallow allows opt-out of stubbing specific component", () => {
   const wrapper = mount(ComplexComponent, {
     shallow: true,
-    stubs: { ComplexA: false } // not work!
+    stubs: { ComplexA: false } // to fix: not work!
   });
 
   console.log(wrapper.html());
