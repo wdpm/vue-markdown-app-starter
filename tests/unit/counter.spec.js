@@ -1,54 +1,28 @@
 import { mount } from "@vue/test-utils";
+import Counter from "../src/Counter.vue";
 
-const Counter = {
-  template: '<button @click="handleClick">Increment</button>',
-  data() {
-    return {
-      count: 0
-    };
-  },
-  methods: {
-    handleClick() {
-      this.count += 1;
-      this.$emit("increment", {
-        count: this.count,
-        isEven: this.count % 2 === 0
-      });
-    }
-  }
-};
-
-test("emits an event when clicked", () => {
+// BAD
+test("counter text updates", async () => {
   const wrapper = mount(Counter);
+  const paragraph = wrapper.find(".paragraph");
 
-  wrapper.find("button").trigger("click");
+  expect(paragraph.text()).toBe("Times clicked: 0");
 
-  expect(wrapper.emitted()).toHaveProperty("increment");
+  await wrapper.setData({ count: 2 });
+
+  expect(paragraph.text()).toBe("Times clicked: 2");
 });
 
-test("emits an event with count when clicked", () => {
-  const wrapper = mount(Counter);
+// GOOD
+test('text updates on clicking', async () => {
+  const wrapper = mount(Counter)
+  const paragraph = wrapper.find(".paragraph");
 
-  wrapper.find("button").trigger("click");
-  wrapper.find("button").trigger("click");
+  expect(paragraph.text()).toBe('Times clicked: 0')
 
-  // We have "clicked" twice, so the array of `increment` should
-  // have two values.
-  expect(wrapper.emitted("increment")).toHaveLength(2);
+  const button = wrapper.find('button')
+  await button.trigger('click')
+  await button.trigger('click')
 
-  // Then, we can make sure each element of `wrapper.emitted('increment')`
-  // contains an array with the expected object.
-  expect(wrapper.emitted("increment")[0]).toEqual([
-    {
-      count: 1,
-      isEven: false
-    }
-  ]);
-
-  expect(wrapper.emitted("increment")[1]).toEqual([
-    {
-      count: 2,
-      isEven: true
-    }
-  ]);
-});
+  expect(paragraph.text()).toBe('Times clicked: 2')
+})
