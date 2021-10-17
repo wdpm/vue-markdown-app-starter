@@ -9,7 +9,9 @@
     <main class="main">
       <nav class="nav">
         <ul>
-          <li><a href="">Nav 1</a></li>
+          <li>
+            <router-link to="/component/button">button</router-link>
+          </li>
           <li><a href="">Nav 2</a></li>
           <li><a href="">Nav 3</a></li>
           <li><a href="">Nav 3</a></li>
@@ -59,7 +61,7 @@
         </article>
         <!-- footer -->
       </div>
-      <aside class="toc">TOC here</aside>
+      <aside class="toc"></aside>
     </main>
   </div>
 </template>
@@ -181,14 +183,14 @@ export default {
 
 .header {
   position: fixed;
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
   height: 60px;
   padding: 1em;
 
-  color: white;
-  background: #ccc;
-  border: 1px solid #ccc;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   z-index: 9;
 
   a {

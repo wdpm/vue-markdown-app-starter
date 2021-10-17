@@ -1,5 +1,5 @@
 <style>
-.my-button {
+.mad-button {
   margin: 0 10px 10px 0;
 }
 </style>
@@ -25,8 +25,8 @@ export default {
 :::demo foo and bar
 
 ```html
-<my-button @click="print">foo</my-button>
-<my-button>bar</my-button>
+<mad-button @click="print">foo</mad-button>
+<mad-button>bar</mad-button>
 ```
 
 :::
@@ -36,7 +36,7 @@ export default {
 :::demo
 
 ```html
-<my-button @click="print">baz</my-button>
+<mad-button @click="print">baz</mad-button>
 ```
 
 :::
