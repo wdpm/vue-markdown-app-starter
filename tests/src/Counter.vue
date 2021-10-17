@@ -1,13 +1,17 @@
 <template>
-<!--  https://next.vue-test-utils.vuejs.org/guide/essentials/easy-to-test.html-->
+  <p class="paragraph">Times clicked: {{ count }}</p>
+  <button @click="increment">increment</button>
 </template>
 
 <script>
 export default {
-  name: "Counter"
-};
+  data() {
+    return { count: 0 }
+  },
+  methods: {
+    increment() {
+      this.count++
+    }
+  }
+}
 </script>
-
-<style scoped>
-
-</style>

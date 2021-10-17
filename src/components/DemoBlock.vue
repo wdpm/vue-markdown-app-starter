@@ -2,11 +2,7 @@
   <div class="demo-block">
     <div class="demo-block-source">
       <slot name="source"></slot>
-      <span
-        class="demo-block-code-icon"
-        v-if="!$slots.default"
-        @click="showCode = !showCode"
-      >
+      <span class="demo-block-code-icon" v-if="!$slots.default" @click="showCode = !showCode">
         <span v-if="!showCode">查看代码</span>
         <span v-else>收起代码</span>
       </span>
@@ -14,11 +10,7 @@
 
     <div class="demo-block-meta" v-if="$slots.default">
       <slot></slot>
-      <span
-        v-if="$slots.default"
-        class="demo-block-code-icon"
-        @click="showCode = !showCode"
-      >
+      <span v-if="$slots.default" class="demo-block-code-icon" @click="showCode = !showCode">
         <span v-if="!showCode">查看代码</span>
         <span v-else>收起代码</span>
       </span>

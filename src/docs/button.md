@@ -6,6 +6,14 @@
 
 <script>
 console.log("button docs");
+// it works
+export default {
+  methods: {
+    print (e) {
+      console.log(e.target)
+    }
+  }
+}
 </script>
 
 ## button
@@ -16,8 +24,8 @@ console.log("button docs");
 
 :::demo foo and bar
 
-```html 
-<my-button>foo</my-button>
+```html
+<my-button @click="print">foo</my-button>
 <my-button>bar</my-button>
 ```
 
@@ -27,8 +35,8 @@ console.log("button docs");
 
 :::demo
 
-```html 
-<my-button>baz</my-button>
+```html
+<my-button @click="print">baz</my-button>
 ```
 
 :::
