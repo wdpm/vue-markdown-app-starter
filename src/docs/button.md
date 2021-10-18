@@ -74,6 +74,34 @@ export default {
 
 :::
 
+### light
+
+:::demo light
+
+``` html
+<mad-button light type="primary">primary light</mad-button>
+<mad-button light type="success">success light</mad-button>
+<mad-button light type="info">info light</mad-button>
+<mad-button light type="warning">warning light</mad-button>
+<mad-button light type="error">error light</mad-button>
+```
+
+:::
+
+### transparent
+
+:::demo transparent
+
+``` html
+<mad-button transparent type="primary">primary light</mad-button>
+<mad-button transparent type="success">success light</mad-button>
+<mad-button transparent type="info">info light</mad-button>
+<mad-button transparent type="warning">warning light</mad-button>
+<mad-button transparent type="error">error light</mad-button>
+```
+
+:::
+
 ### block
 
 :::demo block

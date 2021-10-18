@@ -35,6 +35,8 @@ const props = defineProps({
     default: "plain",
     validator: (value) => ["plain", "round", "circular", "dashed"].includes(value)
   },
+  light: Boolean,
+  transparent: Boolean,
   icon: String,
   block: Boolean,
   disabled: Boolean,
@@ -48,6 +50,8 @@ const useClass = ({ props, loading }) => {
       props.size ? `mad-button--size-${props.size}` : "",
       props.shape ? `mad-button--shape-${props.shape}` : "",
       props.block ? "mad-button--block" : "",
+      props.light ? `mad-button--type-${props.type}--light` : "",
+      props.transparent ? `mad-button--type-${props.type}--transparent` : "",
       loading.value ? "mad-button--loading" : ""
     ];
   });
