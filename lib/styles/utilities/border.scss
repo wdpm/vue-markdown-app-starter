@@ -1,0 +1,52 @@
+@import "../vars/derived-variables";
+
+$border-colors: (
+        'black' : $color-black,
+        'white' : $color-white,
+) !default;
+
+$border-widths: (
+        'normal' : 1px,
+        'fat' : 3px,
+) !default;
+
+$border-styles: (
+        'solid': solid,
+        'dashed': dashed,
+) !default;
+
+$border-directions: ('top', 'right', 'bottom', 'left') !default;
+
+// base border style, feel free to override
+.border {
+  border: 1px solid black !important;
+}
+
+// border top/right/bottom/left
+@each $direction in $border-directions {
+  .border-#{$direction} {
+    border-#{$direction}: 1px solid black !important;
+  }
+}
+
+// border color variants
+@each $name, $color in $border-colors {
+  .border-#{$name} {
+    border-color: $color !important;
+  }
+}
+
+// border width variants
+@each $name, $width in $border-widths {
+  .border-#{$name} {
+    border-width: $width !important;
+  }
+}
+
+// border style variants
+@each $name, $style in $border-styles {
+  .border-#{$name} {
+    border-style: $style !important;
+  }
+}
+

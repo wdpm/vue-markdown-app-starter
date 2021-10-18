@@ -1,0 +1,22 @@
+@import "../vars/breakpoints";
+@import "../mixins/breakpoint";
+
+$column-count: 12 !default;
+$column-gap: .75rem !default;
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; // wrap all items in parent container
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  // stack columns when below $start viewport
+  @each $start, $value in $display-map {
+    @include breakpoint-max($value - 1px) {
+      &.activated-from-#{$start} {
+        flex-direction: column;
+      }
+    }
+  }
+}

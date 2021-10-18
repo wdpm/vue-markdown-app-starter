@@ -1,0 +1,17 @@
+@import "../vars/initial-variables";
+
+$body-bg-color: $color-white !default;
+$body-text-color: $color-black !default;
+
+html {
+  font-size: 100%;
+}
+
+body {
+  min-height: 100vh;
+  font-weight: 400;
+  font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  color: $body-text-color;
+  background-color: $body-bg-color;
+}

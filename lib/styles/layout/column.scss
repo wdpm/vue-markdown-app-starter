@@ -1,0 +1,119 @@
+@import "../vars/breakpoints";
+@import "../mixins/breakpoint";
+
+$column-count: 12 !default;
+$column-gap: .75rem !default;
+
+//semantic percentage width presets
+$width-map: (
+        'four-fifths': 80%,
+        'three-quarters': 75%,
+        'two-third': 66.6666%,
+        'three-fifths': 60%,
+        'half': 50%,
+        'two-fifths': 40%,
+        'one-third': 33.3333%,
+        'one-quarter': 25%,
+        'one-fifth': 20%
+) !default;
+
+.column {
+  display: block;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  background: white;
+  //text-align: center;
+  padding: $column-gap;
+  //border: 1px solid black; //for debug,remove it when finished
+
+  // column percentage widths
+  // format: width-half
+  @each $name, $width in $width-map {
+    &.column-#{$name} {
+      flex: none;
+      width: $width;
+    }
+  }
+
+  // column ?/12 widths
+  // format: column-[number:1 - 12]
+  @for $i from 1 through $column-count {
+    &.column-#{$i} {
+      flex: none;
+      width: ($i / $column-count) * 100%;
+    }
+  }
+
+  // offsets implemented by margin-left
+  // format: offset-half or offset-8
+  @each $name, $width in $width-map {
+    &.offset-#{$name} {
+      margin-left: $width;
+    }
+  }
+  @for $i from 1 through $column-count {
+    &.offset-#{$i} {
+      margin-left: ($i / $column-count) * 100%;
+    }
+  }
+
+  // viewport range description
+  // 0-sm, sm~md, md~lg, lg~xlg, xlg~ +infinity
+  // ---------sm---------md--------lg--------xlg------------
+  //   [xs]      [sm-md]    [md-lg]  [lg-xlg]   [xlg~ +infinity]
+
+  // No media query necessary for xs breakpoint as it's effectively `@media (min-width: 0) { ... }
+  // Note: .column-* is alias of  .column-xs-*
+  // when target specific breakpoint, make no flex and set computed width
+
+  @for $i from 1 through $column-count {
+    &.column-#{$i},
+    &.column-xs-#{$i} {
+      flex: none;
+      width: ($i / $column-count) * 100%;
+    }
+  }
+
+  // >= sm
+  @include breakpoint-min($bp-small) {
+    @for $i from 1 through $column-count {
+      &.column-sm-#{$i} {
+        flex: none;
+        width: ($i / $column-count) * 100%;
+      }
+    }
+  }
+
+  // >= md
+  @include breakpoint-min($bp-medium) {
+    @for $i from 1 through $column-count {
+      &.column-md-#{$i} {
+        flex: none;
+        width: ($i / $column-count) * 100%;
+      }
+    }
+  }
+
+  // >=lg
+  @include breakpoint-min($bp-large) {
+    @for $i from 1 through $column-count {
+      &.column-lg-#{$i} {
+        flex: none;
+        width: ($i / $column-count) * 100%;
+      }
+    }
+  }
+
+  // >=xlg
+  @include breakpoint-min($bp-xlarge) {
+    @for $i from 1 through $column-count {
+      &.column-xlg-#{$i} {
+        flex: none;
+        width: ($i / $column-count) * 100%;
+      }
+    }
+  }
+
+}

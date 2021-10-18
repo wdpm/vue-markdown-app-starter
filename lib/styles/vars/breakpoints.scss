@@ -1,0 +1,23 @@
+// Use 4 breakpoints to divide 5 grid tiers
+//column-xs-[1-12]
+//column-sm-[1-12]
+//column-md-[1-12]
+//column-lg-[1-12]
+//column-xl-[1-12]
+
+// Extra small devices (portrait phones, less than 425px)
+// No media query for `xs` since this is the default in mad-ui
+// ----------425-------768--------1024-------1440------------
+// -----xs---|----sm---|-----md----|----lg----|------xlg-------
+
+$bp-small: 425px !default;
+$bp-medium: 768px !default;
+$bp-large: 1024px !default;
+$bp-xlarge: 1440px !default;
+
+$display-map: (
+        'sm' : $bp-small,
+        'md' : $bp-medium,
+        'lg' : $bp-large,
+        'xlg' : $bp-xlarge
+) !default;

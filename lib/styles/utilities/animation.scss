@@ -1,0 +1,47 @@
+$animate-duration: 1s !default;
+$animate-delay: 1s !default;
+$animate-repeat: 1 !default;
+
+// basic animation, normally be override
+.animation {
+  animation-duration: $animate-duration;
+  animation-fill-mode: both;
+}
+
+// animation-iteration-count
+.animation.infinite {
+  animation-iteration-count: infinite !important;
+}
+
+.animation.repeat-1 {
+  animation-iteration-count: $animate-repeat !important;
+}
+
+.animation.repeat-2 {
+  animation-iteration-count: $animate-repeat * 2 !important;
+}
+
+.animation.repeat-3 {
+  animation-iteration-count: $animate-repeat * 3 !important;
+}
+
+// animation-delay
+.animation.delay-1s {
+  animation-delay: $animate-delay !important;
+}
+
+.animation.delay-2s {
+  animation-delay: $animate-delay * 2 !important;
+}
+
+.animation.delay-3s {
+  animation-delay: $animate-delay * 3 !important;
+}
+
+.animation.delay-4s {
+  animation-delay: $animate-delay * 4 !important;
+}
+
+.animation.delay-5s {
+  animation-delay: $animate-delay * 5 !important;
+}

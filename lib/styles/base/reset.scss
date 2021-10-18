@@ -1,0 +1,87 @@
+/* modified version of normalize.css */
+/*
+remove padding and margin
+ */
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+/*
+set global box-sizing to border-box
+ */
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+// Optimize -webkit-scrollbar
+/* tune smaller scrollbar width*/
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* disable the buttons on the scrollbar (arrows pointing upwards and downwards). */
+*::-webkit-scrollbar-button {
+  display: none;
+}
+
+/*  custom the draggable scrolling handle. */
+*::-webkit-scrollbar-thumb {
+  min-height: 24px;
+  background-color: #999999;
+  background-clip: padding-box;
+  border: 3px solid #fdfdfd;
+  border-radius: 5px;
+}
+
+// List
+ul {
+  list-style: none;
+}
+
+// Media
+img,
+video {
+  height: auto;
+  max-width: 100%;
+}
+
+// Iframe
+iframe {
+  border: 0
+}
+
+// Table
+table {
+  border-collapse: collapse;
+  /* border-spacing only work in border-collapse : separate */
+  //border-spacing: 0;
+}

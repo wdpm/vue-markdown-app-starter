@@ -1,0 +1,193 @@
+@use 'sass:math';
+
+/**
+ * Extracts a string to a map.
+ *
+ * @example
+ * str-split-to-map("1by2", "by")   => ("1","2")
+ *
+ * @overload str-split-to-map($string, $separator)
+ * @param $string [Sass::Script::Value::String] The input string
+ * @param $separator [Sass::Script::Value::String] The separator string
+ * @return [Sass::Script::Value::Map] The map
+ */
+@function str-split-to-map($string, $separator) {
+  $i: str-index($string, $separator);
+  @if $i != null {
+    @return (
+            str-slice($string, 1, $i - 1):str-slice($string, $i + str-length($separator))
+    );
+  }
+  @return $string
+}
+
+/**
+ * Parse a string to a number if valid.
+ *
+ * Reference link: https://hugogiraudel.com/2014/01/15/casting-a-string-to-a-number-in-sass/
+ *
+ * @example
+ * to-number("23")   => 23
+ * to-number("1")   => 1
+ *
+ * @overload to-number($string)
+ * @param $string [Sass::Script::Value::String] The input string
+ * @return [Sass::Script::Value::Number] The parsed number
+ */
+@function to-number($string) {
+  // Matrices
+  $strings: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
+  $numbers: 0 1 2 3 4 5 6 7 8 9;
+  // Result
+  $result: 0;
+
+  // Looping through all characters
+  @for $i from 1 through str-length($string) {
+    $character: str-slice($string, $i, $i);
+    $index: index($strings, $character);
+
+    @if not $index {
+      @warn "Unknown character `#{$character}`.";
+      @return false;
+    }
+
+    $number: nth($numbers, $index);
+    $result: $result * 10 + $number;
+  }
+
+  @return $result;
+}
+
+/**
+ * Returns the luminance of `$color` as a float (between 0 and 1).
+ * 1 is pure white, 0 is pure black.
+ *
+ * Warning: luminance is not same as color.lightness()
+ *
+ * @example
+ * luminance(#BADA55)   => 0.6123778773
+ *
+ * @overload luminance($color)
+ * @param $color [Sass::Script::Value::Color] The input color
+ * @return [Sass::Script::Value::Number] The extracted luminance from color
+ *
+ * @link http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef Reference
+ * @link https://css-tricks.com/snippets/sass/luminance-color-function/ Reference
+ * @link https://gist.github.com/Metaviolet/525b45df7473797e2fc2 Reference
+ * @link https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_Colors_and_Luminance Reference
+ */
+@function luminance($color) {
+  $colors: (
+          'red': red($color),
+          'green': green($color),
+          'blue': blue($color)
+  );
+
+  @each $name, $value in $colors {
+    $value: $value / 255;
+
+    @if $value < 0.03928 {
+      $value: $value / 12.92;
+    } @else {
+      $value: ($value + .055) / 1.055;
+      $value: math.pow($value, 2.4);
+    }
+
+    $colors: map-merge($colors, ($name: $value));
+  }
+
+  @return (map-get($colors, 'red') * .2126) + (map-get($colors, 'green') * .7152) + (map-get($colors, 'blue') * .0722);
+}
+
+/**
+ * find invert color from the input color.
+ *
+ * alternatives: color.invert($color, $weight: 100%)
+ *
+ * @description:
+ *          0---------0.55--------1
+ * input:  black                 white
+ * invert: white                 black
+ *
+ * @example
+ * findColorInvert()   =>
+ *
+ * @overload findColorInvert($color)
+ * @param $color [Sass::Script::Value::Color] The input color
+ * @return [Sass::Script::Value::Color] rgba(#000, 0.7) or #fff
+ */
+@function invert-custom($color) {
+  @if (luminance($color) > 0.55) {
+    @return rgba(#000, 0.7)
+  } @else {
+    @return #fff
+  }
+}
+
+/**
+ * Customize lightening a color.
+ *
+ * alternatives: scale() instead makes it 30% lighter than it was originally.
+ * @debug color.scale(#e1d7d2, $lightness: 30%); // #eae3e0
+ *
+ * @deprecated
+ */
+@function lighten-legacy($color) {
+  @if type-of($color) == 'color' {
+    $l: 96%;
+    @if lightness($color) > 96% {
+      $l: lightness($color);
+    }
+    // if original lightness > 96% then set new lightness to original(means not change)
+    // else set 96% to new lightness
+    @return change-color($color, $lightness: $l);
+  }
+  @return white
+}
+
+/**
+ * Don't use color.lighten() which is often not the desired effect
+ */
+@function lighten-custom($color,$weight:80%) {
+  @return scale-color($color, $lightness: $weight);
+}
+
+/**
+ * Customizing darken a color.
+ *
+ * alternatives:
+ * scale() instead makes it 30% darker than it was originally.
+ * @debug color.scale(#036, $lightness: -30%); // #002447
+ *
+ * anatomy:
+ *
+ *     black                        white
+ *     |------------------------------|
+ *     0              0.53            1
+ *       A                         B
+ *
+ * A res = 44%                  B res= 29%
+ *      A------>
+ *         <--------------------B
+ * 结果：白B往黑处走，黑A往白处走
+ *
+ * @deprecated
+ */
+@function darken-legacy($color) {
+  @if type-of($color) == 'color' {
+    $base-l: 29%;
+    $luminance: luminance($color);
+    $luminance-delta: (0.53 - $luminance);
+    // example: 29% + 15 = 44%
+    $target-l: round($base-l + ($luminance-delta * 53));
+    @return change-color($color, $lightness: math.max($base-l, $target-l));
+  }
+  @return black
+}
+
+/**
+ * Don't use color.darken() which is often not the desired effect
+ */
+@function darken-custom($color,$weight:-30%) {
+  @return scale-color($color, $lightness: $weight);
+}
