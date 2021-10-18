@@ -1,6 +1,7 @@
 const { mount } = require("@vue/test-utils");
 
 const ComplexA = {
+  name: "ComplexA",
   template: "<h2>Hello from real component!</h2>"
 };
 
@@ -20,7 +21,9 @@ const ComplexComponent = {
 test("shallow allows opt-out of stubbing specific component", () => {
   const wrapper = mount(ComplexComponent, {
     shallow: true,
-    stubs: { ComplexA: false } // to fix: not work!
+    global: {
+      stubs: { ComplexA: false }
+    }
   });
 
   console.log(wrapper.html());
@@ -31,4 +34,3 @@ test("shallow allows opt-out of stubbing specific component", () => {
     <complex-c-stub></complex-c-stub>
   */
 });
-

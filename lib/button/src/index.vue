@@ -1,7 +1,9 @@
 <template>
   <button :class="['mad-button', className]" :disabled="isDisabled">
-    <span v-if="loading" class="yx-loading"></span>
-    <span class="yx-btn-content" :style="style">
+    <span v-if="loading" class="mad-loading">
+      <!--      loading icon-->
+    </span>
+    <span class="mad-button__content" :style="style">
       <i v-if="icon" :class="icon"></i>
       <span v-if="$slots.default"><slot></slot></span>
     </span>
@@ -21,17 +23,19 @@ const props = defineProps({
   type: {
     type: String,
     default: "default",
-    validator: (value) => ["success", "primary", "warning", "info", "danger", "default", "text"].includes(value)
+    validator: (value) => ["primary", "success", "warning", "info", "error", "default", "text"].includes(value)
   },
   size: {
     type: String,
-    default: "md",
-    validator: (value) => ["lg", "sm", "md"].includes(value)
+    default: "medium",
+    validator: (value) => ["tiny", "small", "medium", "large"].includes(value)
+  },
+  shape: {
+    type: String,
+    default: "plain",
+    validator: (value) => ["plain", "round", "circular", "dashed"].includes(value)
   },
   icon: String,
-  plain: Boolean,
-  round: Boolean,
-  circle: Boolean,
   block: Boolean,
   disabled: Boolean,
   loading: Boolean
@@ -40,16 +44,11 @@ const props = defineProps({
 const useClass = ({ props, loading }) => {
   return computed(() => {
     return [
-      props.type ? `yx-btn-${props.type}` : "",
-      props.size ? `yx-btn-${props.size}` : "",
-      {
-        "is-plain": props.plain,
-        "is-round": props.round,
-        "is-circle": props.circle,
-        "is-block": props.block,
-        disabled: props.disabled
-      },
-      loading.value ? "yx-btn-loading" : ""
+      props.type ? `mad-button--type-${props.type}` : "",
+      props.size ? `mad-button--size-${props.size}` : "",
+      props.shape ? `mad-button--shape-${props.shape}` : "",
+      props.block ? "mad-button--block" : "",
+      loading.value ? "mad-button--loading" : ""
     ];
   });
 };
@@ -58,6 +57,7 @@ const isDisabled = computed(() => props.loading || props.disabled);
 const { loading } = toRefs(props);
 const className = useClass({ props, loading });
 
+// style when loading
 const style = computed(() => {
   return props.loading ? { opacity: "0" } : {};
 });

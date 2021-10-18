@@ -231,6 +231,11 @@ export default {
 }
 
 .toc {
+  .table-of-contents {
+    visibility: visible;
+    height: auto;
+  }
+
   position: sticky;
   margin-top: 24px;
   top: 84px; /*84 =60(header height) + 24 (margin-top);*/
@@ -262,6 +267,8 @@ export default {
 
 // markdown body toc
 .table-of-contents {
+  visibility: hidden;
+  height: 0;
   // prepend order number to header link
   ol {
     counter-reset: list-item;
