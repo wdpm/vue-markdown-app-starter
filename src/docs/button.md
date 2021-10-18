@@ -57,10 +57,9 @@ export default {
 
 ``` html
 <mad-button>plain</mad-button>
-<mad-button size="plain">plain</mad-button>
-<mad-button size="round">round</mad-button>
-<mad-button size="circular">circular</mad-button>
-<mad-button size="dashed">dashed</mad-button>
+<mad-button shape="plain">plain</mad-button>
+<mad-button shape="round">round</mad-button>
+<mad-button shape="dashed">dashed</mad-button>
 ```
 
 :::

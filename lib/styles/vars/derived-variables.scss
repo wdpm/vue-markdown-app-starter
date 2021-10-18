@@ -11,7 +11,7 @@ $primary: $color-black !default;
 $info: $color-blue-400 !default;
 $success: $color-green-400 !default;
 $warning: $color-yellow-700 !default;
-$danger: $color-red-400 !default;
+$error: $color-red-400 !default;
 
 $light: $color-gray-200 !default;
 $dark: $color-gray-800 !default;
@@ -21,7 +21,7 @@ $primary-invert: invert-custom($primary) !default;
 $info-invert: invert-custom($info) !default;
 $success-invert: invert-custom($success) !default;
 $warning-invert: invert-custom($warning) !default;
-$danger-invert: invert-custom($danger) !default;
+$error-invert: invert-custom($error) !default;
 $light-invert: invert-custom($light) !default;
 $dark-invert: invert-custom($dark) !default;
 
@@ -30,14 +30,14 @@ $primary-light: lighten-custom($primary) !default;
 $info-light: lighten-custom($info) !default;
 $success-light: lighten-custom($success) !default;
 $warning-light: lighten-custom($warning) !default;
-$danger-light: lighten-custom($danger) !default;
+$error-light: lighten-custom($error) !default;
 
 // dark colors
 $primary-dark: darken-custom($primary) !default;
 $info-dark: darken-custom($info) !default;
 $success-dark: darken-custom($success) !default;
 $warning-dark: darken-custom($warning) !default;
-$danger-dark: darken-custom($danger) !default;
+$error-dark: darken-custom($error) !default;
 
 // $light and $dark no light and dark variants
 
@@ -90,7 +90,7 @@ $color-map: (
         "info": ($info, $info-invert, $info-light, $info-dark),
         "success": ($success, $success-invert, $success-light, $success-dark),
         "warning": ($warning, $warning-invert, $warning-light, $warning-dark),
-        "danger": ($danger, $danger-invert, $danger-light, $danger-dark),
+        "error": ($error, $error-invert, $error-light, $error-dark),
 ) !default;
 
 $semantic-color-map: (
@@ -98,5 +98,5 @@ $semantic-color-map: (
         "info": ($info, $info-invert, $info-light, $info-dark),
         "success": ($success, $success-invert, $success-light, $success-dark),
         "warning": ($warning, $warning-invert, $warning-light, $warning-dark),
-        "danger": ($danger, $danger-invert, $danger-light, $danger-dark),
+        "error": ($error, $error-invert, $error-light, $error-dark),
 ) !default;

@@ -20,28 +20,32 @@ $button-hover-border-color: $color-gray-800 !default;
 
 $button-focus-color: $button-color !default;
 $button-focus-border-color: $color-gray-500 !default;
-$button-focus-box-shadow-size: 0 0 0 0.125em !default;
-$button-focus-box-shadow-color: lighten(
-    $button-focus-border-color,
-    20%
-) !default;
+$button-focus-box-shadow-size: 0 0 0 0.1em !default;
+$button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !default;
 
-@mixin focus-box-shadow($bg-color) {
-  &:focus,
-  &.is-focused {
-    box-shadow: $button-focus-box-shadow-size rgba($bg-color, 0.25);
+@mixin hover-style($color,$bg-color,$border-color) {
+  &:hover {
+    color: $color;
+    background-color: $bg-color;
+    border-color: $border-color;
   }
 }
 
-@mixin variant-light($color) {
-  &.variant-light {
+@mixin focus-style($bg-color) {
+  &:focus {
+    box-shadow: $button-focus-box-shadow-size rgba($bg-color, .25);
+  }
+}
+
+@mixin light-style($color) {
+  &.light {
     color: darken($color, 30%);
     background-color: rgba($color, 0.2);
   }
 }
 
-@mixin variant-outlined($color) {
-  &.variant-outlined {
+@mixin outline-style($color) {
+  &.outline {
     color: $color;
     border-color: $color;
     background-color: transparent;
@@ -64,9 +68,10 @@ $button-focus-box-shadow-color: lighten(
   }
 }
 
+
 .mad-button {
-  //display: flex;
-  //align-items: center;
+  //only basic button style can be put here
+  box-sizing: border-box;
   outline: none;
   text-decoration: none;
   background-color: $button-background-color;
@@ -80,124 +85,141 @@ $button-focus-box-shadow-color: lighten(
   font-size: $button-size-normal;
   margin-bottom: 0.5rem;
   margin-right: 0.5rem;
+  user-select: none;
 
-  // States => change border-color/color/shadow
-  &:hover,
-  &.is-hovered {
-    border-color: $button-hover-border-color;
-    color: $button-hover-color;
-  }
-
-  &:focus,
-  &.is-focused {
-    border-color: $button-focus-border-color;
-    color: $button-focus-color;
-    box-shadow: $button-focus-box-shadow-size $button-focus-box-shadow-color;
-  }
-
-  // sizes by font-size
-  &.small {
+  // size
+  &--size-tiny {
     font-size: $button-size-small;
   }
 
-  &.normal {
+  &--size-small {
     font-size: $button-size-normal;
   }
 
-  &.medium {
+  &--size-medium {
     font-size: $button-size-medium;
   }
 
-  &.large {
+  &--size-large {
     font-size: $button-size-large;
   }
 
-  // colors
-  &.white {
+  // color
+  &--type-white,
+  &--type-default {
     background-color: $color-white;
     color: color.invert($color-white, 100%);
-    @include focus-box-shadow($color-white);
+    @include hover-style($button-hover-color, $color-white, $button-hover-border-color);
+    @include focus-style($color-black);
   }
 
-  &.light {
-    background-color: $color-gray-200;
-    color: color.invert($color-gray-200, 100%);
-    @include focus-box-shadow($color-gray-200);
-  }
+  //&--type-light {
+  //  background-color: $color-gray-200;
+  //  color: color.invert($color-gray-200, 100%);
+  //  @include focus-style($color-gray-200);
+  //}
+  //
+  //&--type-dark {
+  //  background-color: $color-gray-600;
+  //  color: $color-white; //hardcode for Aa pass
+  //  @include focus-style($color-gray-600);
+  //}
+  //
+  //&--type-black {
+  //  background-color: $color-black;
+  //  color: color.invert($color-black, 100%);
+  //  @include focus-style($color-black);
+  //}
 
-  &.dark {
-    background-color: $color-gray-600;
-    color: $color-white; //hardcode for Aa pass
-    @include focus-box-shadow($color-gray-600);
-  }
-
-  &.black {
-    background-color: $color-black;
-    color: color.invert($color-black, 100%);
-    @include focus-box-shadow($color-black);
-  }
-
-  &.text {
+  &--type-text {
     background-color: transparent;
     color: black;
+    border-style: none;
     text-decoration: underline;
-    @include focus-box-shadow(black);
+
+    @include hover-style(black, transparent, transparent);
+
+    &:focus {
+      color: #3CB371FF; //hardcode ?
+    }
   }
 
-  &.primary {
+  &--type-primary {
     background-color: $primary;
     color: white;
-    @include focus-box-shadow($primary);
-    @include variant-light($primary);
-    @include variant-outlined($primary);
-    @include disabled($primary);
+    border-color: $primary;
+
+    @include hover-style(white, rgba($primary, .9), $primary);
+    @include focus-style($primary);
+    //@include light-style($primary);
+    //@include outline-style($primary);
+    //@include disabled($primary);
   }
 
-  &.info {
+  &--type-info {
     background-color: $info;
     color: white;
-    @include focus-box-shadow($info);
-    @include variant-light($info);
-    @include variant-outlined($info);
-    @include disabled($info);
+    border-color: $info;
+
+    @include hover-style(white, rgba($info, .9), $info);
+    @include focus-style($info);
+    //@include light-style($info);
+    //@include outline-style($info);
+    //@include disabled($info);
   }
 
-  &.success {
+  &--type-success {
     background-color: $success;
     color: white;
-    @include focus-box-shadow($success);
-    @include variant-light($success);
-    @include variant-outlined($success);
-    @include disabled($success);
+    border-color: $success;
+
+    @include hover-style(white, rgba($success, .9), $success);
+    @include focus-style($success);
+    //@include light-style($success);
+    //@include outline-style($success);
+    //@include disabled($success);
   }
 
-  &.warning {
+  &--type-warning {
     background-color: $warning;
     color: black;
-    @include focus-box-shadow($warning);
-    @include variant-light($warning);
-    @include variant-outlined($warning);
-    @include disabled($warning);
+    border-color: $warning;
+
+    @include hover-style(black, rgba($warning, .9), $warning);
+    @include focus-style($warning);
+    //@include light-style($warning);
+    //@include outline-style($warning);
+    //@include disabled($warning);
   }
 
-  &.danger {
-    background-color: $danger;
+  &--type-error {
+    background-color: $error;
     color: white;
-    @include focus-box-shadow($danger);
-    @include variant-light($danger);
-    @include variant-outlined($danger);
-    @include disabled($danger);
+    border-color: $error;
+
+    @include hover-style(white, rgba($error, .9), $error);
+    @include focus-style($error);
+    //@include light-style($error);
+    //@include outline-style($error);
+    //@include disabled($error);
   }
 
-  // fullwidth
-  &.variant-fullwidth {
+  // block
+  &--block {
     display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
   }
 
-  // is rounded
-  &.variant-rounded {
+  // shape
+  &--shape-round {
     border-radius: $radius-rounded;
+  }
+
+  &--shape-dashed {
+    border-width: 1px;
+    border-style: dashed;
   }
 
   // disabled
