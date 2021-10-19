@@ -7,12 +7,12 @@ const ComponentWithSlots = {
   `,
   data() {
     return {
-      msg: 'world'
-    }
+      msg: "world"
+    };
   }
-}
+};
 
-test('scoped slots', () => {
+test("scoped slots", () => {
   const wrapper = mount(ComponentWithSlots, {
     slots: {
       scoped: `<template #scoped="params">
@@ -20,7 +20,7 @@ test('scoped slots', () => {
         </template>
       `
     }
-  })
+  });
 
-  expect(wrapper.html()).toContain('Hello world')
-})
+  expect(wrapper.html()).toContain("Hello world");
+});

@@ -25,9 +25,11 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
 
 @mixin hover-state-style($color,$bg-color,$border-color) {
   &:hover {
-    color: $color;
-    background-color: $bg-color;
-    border-color: $border-color;
+    &:not([disabled]) {
+      color: $color;
+      background-color: $bg-color;
+      border-color: $border-color;
+    }
   }
 }
 
@@ -49,20 +51,13 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     color: $color;
     border-color: $color;
     background-color: transparent;
-
-    //&:hover,
-    //&.is-hover {
-    //  background-color: $color;
-    //  border-color: $color;
-    //  color: #fff;
-    //}
   }
 }
 
-@mixin disabled($color: $button-color) {
+@mixin disabled-style($bg-color,$border-color) {
   &[disabled] {
-    background-color: rgba($color, 0.6);
-    border-color: transparent;
+    background-color: rgba($bg-color, .6);
+    border-color: rgba($border-color, 1); //alpha .6 not same with bg-color
     box-shadow: none;
     cursor: not-allowed;
   }
@@ -72,6 +67,7 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
 .mad-button {
   //only basic button style can be put here
   box-sizing: border-box;
+  position: relative;
   outline: none;
   text-decoration: none;
   background-color: $button-background-color;
@@ -112,6 +108,7 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
 
     @include hover-state-style($button-hover-color, $color-white, $button-hover-border-color);
     @include focus-state-style($color-black);
+    @include disabled-style($color-white, $button-border-color);
   }
 
   //&--type-light {
@@ -143,6 +140,8 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     &:focus {
       color: #3CB371FF; //hardcode ?
     }
+
+    @include disabled-style(white, white);
   }
 
   &--type-primary {
@@ -154,7 +153,7 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     @include focus-state-style($primary);
     @include light-style($primary);
     @include transparent-style($primary);
-    //@include disabled($primary);
+    @include disabled-style($primary, $primary);
   }
 
   &--type-info {
@@ -166,7 +165,7 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     @include focus-state-style($info);
     @include light-style($info);
     @include transparent-style($info);
-    //@include disabled($info);
+    @include disabled-style($info, $info);
   }
 
   &--type-success {
@@ -176,10 +175,9 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
 
     @include hover-state-style(white, rgba($success, .9), $success);
     @include focus-state-style($success);
-
     @include light-style($success);
     @include transparent-style($success);
-    //@include disabled($success);
+    @include disabled-style($success, $success);
   }
 
   &--type-warning {
@@ -191,7 +189,7 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     @include focus-state-style($warning);
     @include light-style($warning);
     @include transparent-style($warning);
-    //@include disabled($warning);
+    @include disabled-style($warning, $warning);
   }
 
   &--type-error {
@@ -203,7 +201,7 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     @include focus-state-style($error);
     @include light-style($error);
     @include transparent-style($error);
-    //@include disabled($error);
+    @include disabled-style($error, $error);
   }
 
   // block
@@ -224,6 +222,29 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     border-style: dashed;
   }
 
-  // disabled
-  @include disabled();
+  &__loading {
+    position: absolute;
+    display: block;
+    width: 1em;
+    height: 1em;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 3px solid transparent;
+    border-top-color: #000000;
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
+  }
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
 }

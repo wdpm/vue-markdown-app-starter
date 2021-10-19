@@ -10,25 +10,25 @@ test("sets the value", async () => {
   expect(input.element.value).toBe("my@mail.com");
 });
 
-test('trigger', async () => {
-  const wrapper = mount(Form)
+test("trigger", async () => {
+  const wrapper = mount(Form);
 
   // trigger the element
-  await wrapper.find('button').trigger('click')
+  await wrapper.find("button").trigger("click");
 
   // assert some action has been performed, like an emitted event.
-  expect(wrapper.emitted()).toHaveProperty('submit')
-})
+  expect(wrapper.emitted()).toHaveProperty("submit");
+});
 
-test('emits the input to its parent', async () => {
-  const wrapper = mount(Form)
+test("emits the input to its parent", async () => {
+  const wrapper = mount(Form);
 
   // set the value
-  await wrapper.find('input').setValue('my@mail.com')
+  await wrapper.find("input").setValue("my@mail.com");
 
   // trigger the element
-  await wrapper.find('button').trigger('click')
+  await wrapper.find("button").trigger("click");
 
   // assert the `submit` event is emitted,
-  expect(wrapper.emitted('submit')[0][0]).toBe('my@mail.com')
-})
+  expect(wrapper.emitted("submit")[0][0]).toBe("my@mail.com");
+});

@@ -3,7 +3,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     show: {
@@ -13,8 +12,8 @@ export default {
   },
   data() {
     return {
-      greeting: 'Hello'
-    }
+      greeting: "Hello"
+    };
   }
-}
+};
 </script>

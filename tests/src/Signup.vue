@@ -8,23 +8,23 @@
 
 <script>
 export default {
-  emits: ['signup'],
+  emits: ["signup"],
   data() {
     return {
-      username: ''
-    }
+      username: ""
+    };
   },
   computed: {
     error() {
-      return this.username.length < 8
+      return this.username.length < 8;
     }
   },
   methods: {
     submit() {
       if (!this.error) {
-        this.$emit('signup', this.username)
+        this.$emit("signup", this.username);
       }
     }
   }
-}
+};
 </script>

@@ -21,19 +21,16 @@ test("layout default slot", () => {
   });
 
   // expect(wrapper.html()).toContain("Main Content");
-  expect(wrapper.find('main').text()).toContain('Main Content')
+  expect(wrapper.find("main").text()).toContain("Main Content");
 });
 
-test('layout default slot 2', () => {
+test("layout default slot 2", () => {
   const wrapper = mount(Layout, {
     slots: {
-      default: [
-        '<div id="one">One</div>',
-        '<div id="two">Two</div>'
-      ]
+      default: ['<div id="one">One</div>', '<div id="two">Two</div>']
     }
-  })
+  });
 
-  expect(wrapper.find('#one').exists()).toBe(true)
-  expect(wrapper.find('#two').exists()).toBe(true)
-})
+  expect(wrapper.find("#one").exists()).toBe(true);
+  expect(wrapper.find("#two").exists()).toBe(true);
+});

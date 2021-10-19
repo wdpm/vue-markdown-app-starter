@@ -1,38 +1,38 @@
 import { mount } from "@vue/test-utils";
 
-test('renders a greeting', () => {
+test("renders a greeting", () => {
   const Comp = {
     template: `<div>{{ msg1 }} {{ msg2 }}</div>`,
-    props: ['msg1'],
+    props: ["msg1"],
     data() {
       return {
-        msg2: 'world'
-      }
+        msg2: "world"
+      };
     }
-  }
+  };
 
   const wrapper = mount(Comp, {
     props: {
-      msg1: 'hello'
+      msg1: "hello"
     }
-  })
+  });
 
-  expect(wrapper.html()).toContain('hello world')
-})
+  expect(wrapper.html()).toContain("hello world");
+});
 
-test('asserts correct props are passed', () => {
+test("asserts correct props are passed", () => {
   const Foo = {
-    props: ['msg'],
+    props: ["msg"],
     template: `<div>{{ msg }}</div>`
-  }
+  };
 
   const Comp = {
     components: { Foo },
     template: `<div><foo msg="hello world" /></div>`
-  }
+  };
 
-  const wrapper = mount(Comp)
+  const wrapper = mount(Comp);
 
-  expect(wrapper.getComponent(Foo).vm.msg).toBe('hello world')
-  expect(wrapper.getComponent(Foo).props()).toEqual({ msg: 'hello world' })
-})
+  expect(wrapper.getComponent(Foo).vm.msg).toBe("hello world");
+  expect(wrapper.getComponent(Foo).props()).toEqual({ msg: "hello world" });
+});

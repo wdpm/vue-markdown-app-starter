@@ -52,11 +52,8 @@ module.exports = {
                   // 1.获取第一行的内容使用markdown渲染html作为组件的描述
                   // (.*) is description text group = demoInfo[1]
                   let demoInfo = tokens[idx].info.trim().match(/^demo\s+(.*)$/);
-                  let description =
-                    demoInfo && demoInfo.length > 1 ? demoInfo[1] : "";
-                  let descriptionHTML = description
-                    ? markdownRender.render(description)
-                    : "";
+                  let description = demoInfo && demoInfo.length > 1 ? demoInfo[1] : "";
+                  let descriptionHTML = description ? markdownRender.render(description) : "";
 
                   // 2.获取代码块内的html和js代码
                   let content = tokens[idx + 1].content;

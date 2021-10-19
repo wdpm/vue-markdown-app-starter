@@ -44,20 +44,20 @@ test("stubs component with custom template", () => {
   expect(wrapper.html()).toContain("Welcome to Vue.js 3");
 });
 
-test('stubs component', () => {
+test("stubs component", () => {
   const wrapper = mount(App, {
     global: {
       stubs: {
         FetchDataFromApi: true
       }
     }
-  })
+  });
 
-  console.log(wrapper.html())
+  console.log(wrapper.html());
   /*
     <h1>Welcome to Vue.js 3</h1>
     <fetch-data-from-api-stub></fetch-data-from-api-stub>
   */
 
-  expect(wrapper.html()).toContain('Welcome to Vue.js 3')
-})
+  expect(wrapper.html()).toContain("Welcome to Vue.js 3");
+});

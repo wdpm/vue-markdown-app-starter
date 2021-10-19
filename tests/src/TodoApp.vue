@@ -1,17 +1,8 @@
 <template>
   <div>
-    <div
-      v-for="todo in todos"
-      :key="todo.id"
-      data-test="todo"
-      :class="[todo.completed ? 'completed' : '']"
-    >
+    <div v-for="todo in todos" :key="todo.id" data-test="todo" :class="[todo.completed ? 'completed' : '']">
       {{ todo.text }}
-      <input
-        type="checkbox"
-        v-model="todo.completed"
-        data-test="todo-checkbox"
-      />
+      <input type="checkbox" v-model="todo.completed" data-test="todo-checkbox" />
     </div>
 
     <form data-test="form" @submit.prevent="createTodo">
@@ -22,19 +13,19 @@
 
 <script>
 export default {
-  name: 'TodoApp',
+  name: "TodoApp",
 
   data() {
     return {
-      newTodo: '',
+      newTodo: "",
       todos: [
         {
           id: 1,
-          text: 'Learn Vue.js 3',
+          text: "Learn Vue.js 3",
           completed: false
         }
       ]
-    }
+    };
   },
 
   methods: {
@@ -43,8 +34,8 @@ export default {
         id: 2,
         text: this.newTodo,
         completed: false
-      })
+      });
     }
   }
-}
+};
 </script>

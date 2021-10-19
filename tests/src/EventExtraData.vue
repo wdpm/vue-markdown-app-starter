@@ -9,15 +9,15 @@
 export default {
   data() {
     return {
-      value: ''
-    }
+      value: ""
+    };
   },
   methods: {
     handleBlur(event) {
-      if (event.relatedTarget.tagName === 'BUTTON') {
-        this.$emit('focus-lost')
+      if (event.relatedTarget.tagName === "BUTTON") {
+        this.$emit("focus-lost");
       }
     }
   }
-}
+};
 </script>

@@ -1,21 +1,3 @@
-<style>
-.mad-button {
-  margin: 0 10px 10px 0;
-}
-</style>
-
-<script>
-console.log("button docs");
-// it works
-export default {
-  methods: {
-    print (e) {
-      console.log(e.target)
-    }
-  }
-}
-</script>
-
 ## button
 
 [[toc]]
@@ -117,17 +99,25 @@ export default {
 :::demo disabled
 
 ``` html
-<mad-button disabled>disabled</mad-button>
+<mad-button disabled>default</mad-button>
+<mad-button type="default" disabled>default</mad-button>
+<mad-button type="primary" disabled>primary</mad-button>
+<mad-button type="success" disabled>success</mad-button>
+<mad-button type="warning" disabled>warning</mad-button>
+<mad-button type="info" disabled>info</mad-button>
+<mad-button type="error" disabled>error</mad-button>
+<mad-button type="text" disabled>text</mad-button>
 ```
 
 :::
 
 ### loading
 
-:::demo 加载中
+:::demo loading: avoid duplicate submission
 
 ``` html
 <mad-button loading>loading</mad-button>
+<mad-button type="success" loading>loading</mad-button>
 ```
 
 :::
@@ -141,3 +131,21 @@ function foo() {
   return "bar"
 }
 ```
+
+<style>
+.mad-button {
+  margin: 0 10px 10px 0;
+}
+</style>
+
+<script>
+console.log("button docs");
+// it works
+export default {
+  methods: {
+    print (e) {
+      console.log(e.target)
+    }
+  }
+}
+</script>

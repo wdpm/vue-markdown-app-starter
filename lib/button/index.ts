@@ -5,4 +5,4 @@ Button.install = (app: App) => {
   app.component(Button.name, Button);
 };
 
-export default Button
+export default Button;

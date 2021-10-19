@@ -1,8 +1,6 @@
 <template>
   <button :class="['mad-button', className]" :disabled="isDisabled">
-    <span v-if="loading" class="mad-loading">
-      <!--      loading icon-->
-    </span>
+    <span v-if="loading" class="mad-button__loading"></span>
     <span class="mad-button__content" :style="style">
       <i v-if="icon" :class="icon"></i>
       <span v-if="$slots.default"><slot></slot></span>

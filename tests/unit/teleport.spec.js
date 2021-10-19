@@ -22,8 +22,8 @@ test("emits a signup event when valid", async () => {
   // <!--teleport end-->
 
   const signup = wrapper.getComponent(Signup); // got it!
-  await signup.get('input').setValue('valid_username')
-  await signup.get('form').trigger('submit.prevent')
+  await signup.get("input").setValue("valid_username");
+  await signup.get("form").trigger("submit.prevent");
 
-  expect(signup.emitted().signup[0]).toEqual(['valid_username'])
+  expect(signup.emitted().signup[0]).toEqual(["valid_username"]);
 });

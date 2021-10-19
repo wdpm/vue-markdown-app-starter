@@ -10,23 +10,23 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   data() {
     return {
       posts: null,
       loading: null
-    }
+    };
   },
   methods: {
     async getPosts() {
-      this.loading = true
+      this.loading = true;
 
-      this.posts = await axios.get('/api/posts')
+      this.posts = await axios.get("/api/posts");
 
-      this.loading = null
+      this.loading = null;
     }
   }
-}
+};
 </script>
