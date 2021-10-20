@@ -239,7 +239,7 @@ export default {
   position: sticky;
   margin-top: 24px;
   top: 84px; /*84 =60(header height) + 24 (margin-top);*/
-  right: 24px;
+  //right: 24px;
   align-self: start;
   max-height: 80vh;
   padding-left: 0;

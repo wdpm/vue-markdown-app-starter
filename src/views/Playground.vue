@@ -12,7 +12,7 @@
 
 <script setup>
 import MadButton from "../../lib/button/src";
-import { defineEmits, defineExpose, defineProps, ref, useAttrs, useSlots } from "vue";
+import { ref, useAttrs, useSlots } from "vue";
 
 let loading = ref(true);
 

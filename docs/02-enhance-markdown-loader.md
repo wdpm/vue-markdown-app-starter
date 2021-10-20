@@ -7,6 +7,7 @@ Now it's time to enhance our markdown loader. Before writing code, we should cla
 ### input format
 
 our input markdown file format example:
+
 ```
 <style>
 .my-button {
@@ -23,7 +24,7 @@ console.log("button docs");
 ### 基本用法1
 
 :::demo foo and bar
-\\```html 
+\\```html
 <my-button>foo</my-button>
 <my-button>bar</my-button>
 \\```
@@ -32,7 +33,7 @@ console.log("button docs");
 ### 基本用法2
 
 :::demo
-\\```html 
+\\```html
 <my-button>baz</my-button>
 \\```
 :::
@@ -42,17 +43,22 @@ console.log("button docs");
 > options
 
 ```
+
 let's divide above markdown into three categories:
+
 - top part: css style and js script
 - normal markdown content: such as `## button` title
 - `demo` block in between two `:::`
+
 ### our goal
+
 - extract top part's `style` and `script` into vue SFC corresponding `style` and `script`
 - parse `demo` block, replace it's content by external vue component `DemoBlock`(should be registered globally).
-- parse normal markdown content and copy to vue SFC `template`. 
+- parse normal markdown content and copy to vue SFC `template`.
 
-After 3 steps above, we now get a normal vue SFC file in
-  memory. Pass this vue file to vue-loader v16.5.0, then you can get final compiled result as html.
+After 3 steps above, we now get a normal vue SFC file in memory. Pass this vue file to vue-loader v16.5.0, then you can
+get final compiled result as html.
+
 ## implementation
 
 Here I will not explain the code line by line. But I will explain the key code snippet.
@@ -60,6 +66,7 @@ Here I will not explain the code line by line. But I will explain the key code s
 ### extract top part's `style` and `script`
 
 `scripts/mad-vue-markdown-loader/index.js`
+
 ```js
   // extract style and script(first), then remove style and script
 const output = {
@@ -83,9 +90,11 @@ result =
 
 return result;
 ```
+
 ### parse `demo` block
 
 `vue.config.js`
+
 ```js
 render: function(tokens, idx) {
   // open tags
@@ -106,12 +115,12 @@ render: function(tokens, idx) {
                                 <template v-slot:source>
                                     <div class="source">${content}</div>
                                 </template>
-                                
+
                                 ${descriptionHTML}
-                                
+
                                 <template v-slot:highlight>
                                   <div class="highlight">
-                                  <!--这里就是显示代码片段的地方-->                            
+                                  <!--这里就是显示代码片段的地方-->
                             `;
   } else {
     // close tags must put here
@@ -119,9 +128,11 @@ render: function(tokens, idx) {
   }
 }
 ```
+
 ### parse normal markdown content and copy
 
 `scripts/mad-vue-markdown-loader/index.js`
+
 ```js
  // @符号在markdown中是特殊符号, 改为 __at__ ,然后渲染该md文件，这样不会冲突
 source = source.replace(/@/g, "__at__");
@@ -136,9 +147,11 @@ if (opts.raw) {
   return "module.exports = " + JSON.stringify(result);
 }
 ```
+
 ### pass markdown loader result to vue-loader
 
 `vue.config.js`
+
 ```js
 chainWebpack: (config) => {
   config.module
@@ -152,6 +165,7 @@ chainWebpack: (config) => {
     .use("mad-vue-markdown-loader")
     .loader("./scripts/mad-vue-markdown-loader/index.js")
 ```
+
 Note: loader execute order is reversed.
 
 ## next
@@ -159,7 +173,9 @@ Note: loader execute order is reversed.
 ### write DemoBlock.vue
 
 key code snippet as below:
+
 ```html
+
 <template>
   <div class="demo-block">
     <div class="demo-block-source">
@@ -180,22 +196,31 @@ key code snippet as below:
 ```
 
 ### hardcode one route in vue-router
+
 ```js
   {
-    path: "/about",
-    name: "About",
-    component: () => import("../views/About.vue"),
-    children: [
-      {
-        path: "button",
-        component: () => import(`@/docs/${"button"}.md`)
-      }
-    ]
-  }
+  path: "/about",
+    name
+:
+  "About",
+    component
+:
+  () => import("../views/About.vue"),
+    children
+:
+  [
+    {
+      path: "button",
+      component: () => import(`@/docs/${"button"}.md`)
+    }
+  ]
+}
 ```
 
 ### edit About.vue
+
 ```vue
+
 <template>
   <div class="about">
     <h1>This is an about page</h1>
@@ -208,14 +233,41 @@ key code snippet as below:
 export default {};
 </script>
 ```
+
 Now Let's run app by `npm run serve`. Visit `http://localhost:8080/about/button`
 If it works, you should see:
 
 ![](./assets/02-step-result-preview.png)
 
+## weak point
+Assume we have this snippet in markdown file.
+```
+:::demo test script
+``` html
+<mad-button>test</mad-button>
+
+<script>
+  export default {
+    created(){
+      console.log('test script in md demo')
+    }
+  }
+</script>
+\```
+:::
+```
+The script part will replace our script part previously.
+```
+<script>
+console.log("button docs");
+</script>
+```
+> one solution: https://www.yuque.com/luchx/ziwg5m/df00sl
+
 ## summary
 
 In this chapter, we enhance our markdown loader successfully. It can :
+
 - extract style and script from *.md file into vue SFC
 - find `demo` block and parse it as vue SFC template
 - parse normal markdown content and merge into vue SFC template

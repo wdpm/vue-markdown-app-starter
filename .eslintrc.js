@@ -28,7 +28,8 @@ module.exports = {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["off"],
     "vue/valid-template-root": "off",
-    "@typescript-eslint/no-empty-function": "off"
+    "@typescript-eslint/no-empty-function": "off",
+    "no-undef": "off" // fix error like: 'defineExpose' is not defined (no-undef)
   },
   overrides: [
     {
