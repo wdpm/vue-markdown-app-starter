@@ -1,5 +1,5 @@
 <template>
-  <button :class="['mad-button', className]" :disabled="isDisabled" :style="buttonStyle">
+  <button :class="['mad-button', classNames]" :disabled="isDisabled" :style="buttonStyle">
     <span v-if="loading" class="mad-button__loading"></span>
     <span class="mad-button__content" :style="contentStyleWhenLoading">
       <i v-if="icon" :class="icon"></i>
@@ -60,7 +60,7 @@ const useClass = ({ props, loading }) => {
 
 const isDisabled = computed(() => props.loading || props.disabled);
 const { loading } = toRefs(props);
-const className = useClass({ props, loading });
+const classNames = useClass({ props, loading });
 
 const buttonStyle = computed(() => {
   const size = props.size;
@@ -69,7 +69,9 @@ const buttonStyle = computed(() => {
       width: size + "px",
       height: size + "px",
       "border-radius": `${size / 2}px`,
-      padding: 0
+      padding: 0,
+      // "line-height": `${1.414 * (size / 2)}px`, // (sqrt 2) * radius
+      "font-size": `${size / 2}px` // radius
     };
   }
   return {};

@@ -1,10 +1,10 @@
-## button
+## 按钮
 
 [[toc]]
 
-### type
+### 类型
 
-:::demo type
+:::demo 类型，影响字体颜色，背景颜色，边框颜色。 鼠标悬浮/点击不放时，根据type的不同，样式变化有所区别。
 
 ``` html
 <mad-button>default</mad-button>
@@ -19,9 +19,9 @@
 
 :::
 
-### size
+### 大小
 
-:::demo size
+:::demo 大小，影响尺寸。
 
 ``` html
 <mad-button>medium</mad-button>
@@ -29,20 +29,7 @@
 <mad-button size="small">small</mad-button>
 <mad-button size="medium">medium</mad-button>
 <mad-button size="large">large</mad-button>
-```
-
-:::
-
-### shape
-
-:::demo shape
-
-``` html
-<mad-button>plain</mad-button>
-<mad-button shape="plain">plain</mad-button>
-<mad-button shape="round">round</mad-button>
-<mad-button shape="dashed">dashed</mad-button>
-<mad-button :size="96" type="info">96</mad-button>
+<mad-button :size="72" type="info">72</mad-button>
 <mad-button :size="64">64</mad-button>
 <mad-button :size="48" type="success">A</mad-button>
 <mad-button :size="36">B</mad-button>
@@ -51,9 +38,22 @@
 
 :::
 
-### icon
+### 形状
 
-:::demo icon
+:::demo 形状，影响外形。这里指边框的样式。
+
+``` html
+<mad-button>plain</mad-button>
+<mad-button shape="plain">plain</mad-button>
+<mad-button shape="round">round</mad-button>
+<mad-button shape="dashed">dashed</mad-button>
+```
+
+:::
+
+### 图标
+
+:::demo 图标，表示内嵌图标。
 
 ``` html
 <mad-button icon="home">with home icon</mad-button>
@@ -61,9 +61,9 @@
 
 :::
 
-### light
+### 浅色
 
-:::demo light
+:::demo 浅色版本，背景颜色淡化。
 
 ``` html
 <mad-button light type="primary">primary light</mad-button>
@@ -75,9 +75,9 @@
 
 :::
 
-### transparent
+### 透明
 
-:::demo transparent
+:::demo 透明版本，背景颜色透明。
 
 ``` html
 <mad-button transparent type="primary">primary light</mad-button>
@@ -89,9 +89,9 @@
 
 :::
 
-### block
+### 块级
 
-:::demo block
+:::demo 块级，表示占满父容器宽度。
 
 ``` html
 <mad-button block>block</mad-button>
@@ -99,9 +99,9 @@
 
 :::
 
-### disabled
+### 禁用
 
-:::demo disabled
+:::demo 禁用，表示不可用状态。此时无法响应用户输入。
 
 ``` html
 <mad-button disabled>default</mad-button>
@@ -116,9 +116,9 @@
 
 :::
 
-### loading
+### 加载中
 
-:::demo loading: avoid duplicate submission
+:::demo 加载中，属于禁用状态，常用于避免重复提交。
 
 ``` html
 <mad-button loading>loading</mad-button>
@@ -128,8 +128,6 @@
 :::
 
 ### API
-
-> API gere
 
 ```js
 function foo() {
