@@ -65,11 +65,11 @@ const className = useClass({ props, loading });
 const buttonStyle = computed(() => {
   const size = props.size;
   if (typeof size == "number") {
-    //TODO when circle : reset padding
     return {
       width: size + "px",
       height: size + "px",
-      "border-radius": `${size / 2}px`
+      "border-radius": `${size / 2}px`,
+      padding: 0
     };
   }
   return {};
