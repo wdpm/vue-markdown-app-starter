@@ -15,7 +15,7 @@
   $i: str-index($string, $separator);
   @if $i != null {
     @return (
-            str-slice($string, 1, $i - 1):str-slice($string, $i + str-length($separator))
+      str-slice($string, 1, $i - 1):str-slice($string, $i + str-length($separator))
     );
   }
   @return $string
@@ -78,9 +78,9 @@
  */
 @function luminance($color) {
   $colors: (
-          'red': red($color),
-          'green': green($color),
-          'blue': blue($color)
+    'red': red($color),
+    'green': green($color),
+    'blue': blue($color)
   );
 
   @each $name, $value in $colors {
@@ -146,7 +146,10 @@
 }
 
 /**
- * Don't use color.lighten() which is often not the desired effect
+@deprecated
+ * use scale-color()
+ * Don't use color.lighten() which is often not the desired effect.
+ * weight 0-100%
  */
 @function lighten-custom($color,$weight:80%) {
   @return scale-color($color, $lightness: $weight);
@@ -186,7 +189,9 @@
 }
 
 /**
- * Don't use color.darken() which is often not the desired effect
+@deprecated
+ * Don't use color.darken() which is often not the desired effect.
+ * weight -0% ~ -100%
  */
 @function darken-custom($color,$weight:-30%) {
   @return scale-color($color, $lightness: $weight);

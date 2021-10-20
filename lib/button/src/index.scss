@@ -16,12 +16,15 @@ $button-padding-vertical: calc(0.5em - #{$button-border-width}) !default;
 $button-padding-horizontal: 1em !default;
 
 $button-hover-color: $button-color !default;
-$button-hover-border-color: $color-gray-800 !default;
+$button-hover-border-color: $color-gray-600 !default;
 
 $button-focus-color: $button-color !default;
 $button-focus-border-color: $color-gray-500 !default;
 $button-focus-box-shadow-size: 0 0 0 0.1em !default;
 $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !default;
+
+// docs: https://developer.mozilla.org/zh-CN/docs/Web/CSS/:active
+// link--visited--hover--focus--active
 
 @mixin hover-state-style($color,$bg-color,$border-color) {
   &:hover {
@@ -33,15 +36,41 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
   }
 }
 
+// deprecated
 @mixin focus-state-style($bg-color) {
   &:focus {
     box-shadow: $button-focus-box-shadow-size rgba($bg-color, .25);
   }
 }
 
+// when active:
+// - darken color for text type (1)
+// - darken border color for default type(1)
+// - darken border-color + bg-color for semantic type like success,info (5)
+@mixin active-state-style($color:null,$bg-color:null,$border-color:null) {
+  &:active {
+    &:not([disabled]) {
+      // change color
+      @if ($color and $bg-color ==null and $border-color==null) {
+        color: color.scale($color, $lightness: -30%);
+      }
+        // change color and border-color
+      @else if ($color and $bg-color==null and $border-color) {
+        color: color.scale($color, $lightness: -30%);
+        border-color: scale-color($border-color, $lightness: -80%);
+      }
+        // change bg-color and border-color
+      @else if ($color==null and $bg-color and $border-color) {
+        background-color: scale-color($bg-color, $lightness: -30%);
+        border-color: color.scale($border-color, $lightness: -30%);
+      }
+    }
+  }
+}
+
 @mixin light-style($color) {
   &--light {
-    color: darken($color, 30%);
+    color: $color;
     background-color: rgba($color, 0.2);
   }
 }
@@ -100,34 +129,15 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
   }
 
   // color
-  &--type-white,
   &--type-default {
     background-color: $color-white;
     color: color.invert($color-white, 100%);
     border-color: $button-border-color;
 
     @include hover-state-style($button-hover-color, $color-white, $button-hover-border-color);
-    @include focus-state-style($color-black);
+    @include active-state-style($color: black, $border-color: black);
     @include disabled-style($color-white, $button-border-color);
   }
-
-  //&--type-light {
-  //  background-color: $color-gray-200;
-  //  color: color.invert($color-gray-200, 100%);
-  //  @include focus-state-style($color-gray-200);
-  //}
-  //
-  //&--type-dark {
-  //  background-color: $color-gray-600;
-  //  color: $color-white; //hardcode for Aa pass
-  //  @include focus-state-style($color-gray-600);
-  //}
-  //
-  //&--type-black {
-  //  background-color: $color-black;
-  //  color: color.invert($color-black, 100%);
-  //  @include focus-state-style($color-black);
-  //}
 
   &--type-text {
     background-color: transparent;
@@ -135,12 +145,8 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     border-style: none;
     text-decoration: underline;
 
-    @include hover-state-style(black, transparent, transparent);
-
-    &:focus {
-      color: #3CB371FF; //hardcode ?
-    }
-
+    @include hover-state-style(#3CB371FF, transparent, transparent);
+    @include active-state-style($color: #3CB371FF);
     @include disabled-style(white, white);
   }
 
@@ -150,7 +156,7 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     border-color: $primary;
 
     @include hover-state-style(white, rgba($primary, .9), $primary);
-    @include focus-state-style($primary);
+    @include active-state-style($bg-color: $primary, $border-color: $primary);
     @include light-style($primary);
     @include transparent-style($primary);
     @include disabled-style($primary, $primary);
@@ -162,7 +168,7 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     border-color: $info;
 
     @include hover-state-style(white, rgba($info, .9), $info);
-    @include focus-state-style($info);
+    @include active-state-style($bg-color: $info, $border-color: $info);
     @include light-style($info);
     @include transparent-style($info);
     @include disabled-style($info, $info);
@@ -174,7 +180,7 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     border-color: $success;
 
     @include hover-state-style(white, rgba($success, .9), $success);
-    @include focus-state-style($success);
+    @include active-state-style($bg-color: $success, $border-color: $success);
     @include light-style($success);
     @include transparent-style($success);
     @include disabled-style($success, $success);
@@ -186,7 +192,7 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     border-color: $warning;
 
     @include hover-state-style(black, rgba($warning, .9), $warning);
-    @include focus-state-style($warning);
+    @include active-state-style($bg-color: $warning, $border-color: $warning);
     @include light-style($warning);
     @include transparent-style($warning);
     @include disabled-style($warning, $warning);
@@ -198,7 +204,7 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     border-color: $error;
 
     @include hover-state-style(white, rgba($error, .9), $error);
-    @include focus-state-style($error);
+    @include active-state-style($bg-color: $error, $border-color: $error);
     @include light-style($error);
     @include transparent-style($error);
     @include disabled-style($error, $error);
@@ -213,6 +219,10 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
   }
 
   // shape
+  &--shape-plain {
+
+  }
+
   &--shape-round {
     border-radius: $radius-rounded;
   }
@@ -236,6 +246,12 @@ $button-focus-box-shadow-color: lighten($button-focus-border-color, 20%) !defaul
     border-top-color: #000000;
     border-radius: 50%;
     animation: button-loading-spinner 1s ease infinite;
+  }
+
+  &__content {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 

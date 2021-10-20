@@ -42,6 +42,11 @@
 <mad-button shape="plain">plain</mad-button>
 <mad-button shape="round">round</mad-button>
 <mad-button shape="dashed">dashed</mad-button>
+<mad-button :size="96">96</mad-button>
+<mad-button :size="64">64</mad-button>
+<mad-button :size="48">A</mad-button>
+<mad-button :size="36">B</mad-button>
+<mad-button :size="24">C</mad-button>
 ```
 
 :::

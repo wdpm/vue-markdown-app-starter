@@ -1,7 +1,7 @@
 <template>
-  <button :class="['mad-button', className]" :disabled="isDisabled">
+  <button :class="['mad-button', className]" :disabled="isDisabled" :style="buttonStyle">
     <span v-if="loading" class="mad-button__loading"></span>
-    <span class="mad-button__content" :style="style">
+    <span class="mad-button__content" :style="contentStyleWhenLoading">
       <i v-if="icon" :class="icon"></i>
       <span v-if="$slots.default"><slot></slot></span>
     </span>
@@ -24,9 +24,12 @@ const props = defineProps({
     validator: (value) => ["primary", "success", "warning", "info", "error", "default", "text"].includes(value)
   },
   size: {
-    type: String,
+    type: [String, Number],
     default: "small",
-    validator: (value) => ["tiny", "small", "medium", "large"].includes(value)
+    validator: (value) => {
+      if (typeof value === "number") return true;
+      return ["tiny", "small", "medium", "large"].includes(value);
+    }
   },
   shape: {
     type: String,
@@ -45,7 +48,7 @@ const useClass = ({ props, loading }) => {
   return computed(() => {
     return [
       props.type ? `mad-button--type-${props.type}` : "",
-      props.size ? `mad-button--size-${props.size}` : "",
+      props.size && typeof props.size == "string" ? `mad-button--size-${props.size}` : "",
       props.shape ? `mad-button--shape-${props.shape}` : "",
       props.block ? "mad-button--block" : "",
       props.light ? `mad-button--type-${props.type}--light` : "",
@@ -59,8 +62,20 @@ const isDisabled = computed(() => props.loading || props.disabled);
 const { loading } = toRefs(props);
 const className = useClass({ props, loading });
 
-// style when loading
-const style = computed(() => {
+const buttonStyle = computed(() => {
+  const size = props.size;
+  if (typeof size == "number") {
+    //TODO when circle : reset padding
+    return {
+      width: size + "px",
+      height: size + "px",
+      "border-radius": `${size / 2}px`
+    };
+  }
+  return {};
+});
+
+const contentStyleWhenLoading = computed(() => {
   return props.loading ? { opacity: "0" } : {};
 });
 </script>
