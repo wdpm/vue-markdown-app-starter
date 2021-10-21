@@ -240,6 +240,7 @@ If it works, you should see:
 ![](./assets/02-step-result-preview.png)
 
 ## weak point
+### can't write script and style in demo block
 Assume we have this snippet in markdown file.
 ```
 :::demo test script
@@ -262,7 +263,23 @@ The script part will replace our script part previously.
 console.log("button docs");
 </script>
 ```
-> one solution: https://www.yuque.com/luchx/ziwg5m/df00sl
+If we want to write some scripts on demo block SFC. Now we can't.
+
+> Maybe solutions:
+- https://www.yuque.com/luchx/ziwg5m/df00sl
+- https://github.com/mengdu/vue-dotmd-loader
+
+目前，无法在一个md文件中，使用demo block 书写script和style标签。
+而是仅仅抽取了其中的template。这样局限性很大。
+- style不常用，这个可以先忽略。
+- script目前只能在外部顶层的script中书写，掌管该md文件所有demo block的事件处理。
+
+### can't import external file by custom tag
+We maybe want this feature:
+```markdown
+[demo:vue](/path/to/example.vue)
+[demo:html](/path/to/example.html)
+```
 
 ## summary
 

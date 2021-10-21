@@ -22,8 +22,10 @@ export default {
 </script>
 
 <script setup>
-import { computed, ref, watch } from "vue";
+// setup() 周期：一个组件选项，在组件被创建之前，props 被解析之后执行
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 
+// prop
 const props = defineProps({
   show: {
     type: Boolean,
@@ -42,6 +44,7 @@ const props = defineProps({
   }
 });
 
+// data
 const settings = {
   speedOpen: 50,
   speedClose: 350,
@@ -53,15 +56,11 @@ const drawer = ref(null);
 const emits = defineEmits(["close", "update:show"]);
 
 const open = () => {
-  console.log("should open");
   // Make it active
   drawer.value.classList.add(settings.activeClass);
 
   // Make body overflow hidden so it's not scrollable
   document.documentElement.style.overflow = "hidden";
-
-  // Toggle accessibility
-  // toggleccessibility(trigger);
 
   // Make it visible
   setTimeout(function () {
@@ -73,18 +72,11 @@ const open = () => {
  * close()逻辑绑定到：close 按钮以及overlay 元素。
  */
 const close = () => {
-  console.log("should close");
-
-  // childrenTrigger = document.querySelector("[aria-controls=\"" + closestParent.id + "\"");
-
   // Make it not visible
   drawer.value.classList.remove(settings.visibleClass);
 
   // Remove body overflow hidden
   document.documentElement.style.overflow = "";
-
-  // Toggle accessibility
-  // toggleccessibility(childrenTrigger);
 
   // Make it not active
   setTimeout(function () {
@@ -96,11 +88,30 @@ const close = () => {
   emits("close");
 };
 
+// Keydown Handler, handle Escape button
+const keydownHandler = (event) => {
+  if (event.key === "Escape" || event.keyCode === 27) {
+    close();
+  }
+};
+onMounted(() => {
+  document.addEventListener("keydown", keydownHandler, false);
+});
+onUnmounted(() => {
+  document.removeEventListener("keydown", keydownHandler);
+});
+
+// watch
 watch(
   () => props.show,
   (newValue, oldValue) => {
-    if (newValue) open();
-    else close();
+    // nextTick: 在修改数据之后立即使用它，然后等待 DOM 更新
+    // 这里 prop.show 被父级改变，但是由于Vue的更新是异步队列机制。此时show的最新值还没有反应到DOM。
+    // 因此这里需要调用nextTick()，等待show最新值反应到DOM。这时再执行涉及DOM操作的open()和close()方法时，就不会出现诡异BUG
+    nextTick(() => {
+      if (newValue) open();
+      else close();
+    });
   }
 );
 
@@ -111,97 +122,5 @@ let overlayStyle = computed(() => {
 </script>
 
 <style lang="scss">
-.drawer {
-  display: none;
-
-  &__overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 200;
-    opacity: 0;
-    transition: opacity 0.3s;
-    will-change: opacity;
-    background-color: #000; //must retain, fallback when user pass invalid style
-    user-select: none;
-  }
-
-  &__wrapper {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    height: 100%;
-    width: 100%;
-    max-width: 300px;
-    z-index: 9999;
-    overflow: auto;
-
-    transition: transform 0.3s;
-    will-change: transform;
-    background-color: #fafafa;
-
-    display: flex;
-    flex-direction: column;
-
-    transform: translateX(103%); /* extra 3% because of box-shadow */
-    -webkit-overflow-scrolling: touch; /* enables momentum scrolling in iOS overflow elements */
-    /* Optional */
-    box-shadow: 0 2px 6px #777;
-  }
-
-  &__header {
-    /* Optional */
-    padding: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
-    /*display: none;*/
-  }
-
-  &__close {
-    /* Optional */
-    margin: 0;
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    background-image: url("data:image/svg+xml,%0A%3Csvg width='15px' height='16px' viewBox='0 0 15 16' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='2.-Menu' transform='translate(-15.000000, -13.000000)' stroke='%23000000'%3E%3Cg id='Group' transform='translate(15.000000, 13.521000)'%3E%3Cpath d='M0,0.479000129 L15,14.2971819' id='Path-3'%3E%3C/path%3E%3Cpath d='M0,14.7761821 L15,-1.24344979e-14' id='Path-3'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    width: 15px;
-    height: 15px;
-  }
-
-  &__content {
-    position: relative;
-    height: 100%;
-    flex-grow: 1;
-    /* Optional */
-    padding: 1.5rem;
-  }
-
-  &--left .drawer__wrapper {
-    left: 0;
-    transform: translate3d(-100%, 0, 0);
-  }
-
-  &--right .drawer__wrapper {
-    right: 0;
-  }
-
-  &.is-active {
-    display: block;
-  }
-
-  &.is-visible {
-    .drawer__wrapper {
-      transform: translateX(0);
-    }
-
-    .drawer__overlay {
-      opacity: 0.5;
-    }
-  }
-}
+@import "index";
 </style>

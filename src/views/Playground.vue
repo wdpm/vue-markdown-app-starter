@@ -4,37 +4,28 @@
     <!--    <mad-mask :show="showValue" @update:show="showValue = $event">mask content</mad-mask>-->
     <!--    <mad-mask v-model:show="showValue">mask content</mad-mask>-->
     {{ showValue }}
-    <button @click="click">click :</button>
-    <mad-drawer v-model:show="showValue" direction="left" overlay-bg-color="noop">
-      <template #title> title content </template>
+    {{ directionValue }}
+    <div class="demo">
+      <mad-button @click="showDirection('')">default</mad-button>
+      <mad-button @click="showDirection('left')">left</mad-button>
+      <mad-button @click="showDirection('right')">right</mad-button>
+      <mad-button @click="showOverlayBgColor()">custom overlay bg color</mad-button>
+    </div>
+    <mad-drawer v-model:show="showValue" :direction="directionValue">
+      <template #title> title content</template>
       <template #content>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem in aliquid nulla, sed veritatis, officiis ea aut
           natus quas voluptates perferendis ratione modi ab qui omnis cum labore alias eos.
         </p>
-        <div style="padding: 100px 0"></div>
+      </template>
+    </mad-drawer>
+    <mad-drawer v-model:show="showValue2" :direction="directionValue2" overlay-bg-color="blue">
+      <template #title> title content</template>
+      <template #content>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
-          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
-          necessitatibus.
-        </p>
-        <div style="padding: 100px 0"></div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
-          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
-          necessitatibus.
-        </p>
-        <div style="padding: 100px 0"></div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
-          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
-          necessitatibus.
-        </p>
-        <div style="padding: 100px 0"></div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
-          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
-          necessitatibus.
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem in aliquid nulla, sed veritatis, officiis ea aut
+          natus quas voluptates perferendis ratione modi ab qui omnis cum labore alias eos.
         </p>
       </template>
     </mad-drawer>
@@ -42,12 +33,37 @@
 </template>
 
 <script setup>
-//https://v3.cn.vuejs.org/api/sfc-script-setup.html#%E4%B8%8E%E6%99%AE%E9%80%9A%E7%9A%84-script-%E4%B8%80%E8%B5%B7%E4%BD%BF%E7%94%A8
 import MadDrawer from "../../lib/drawer/src";
+import MadButton from "../../lib/button/src";
 import { ref } from "vue";
 
 let showValue = ref(false);
-const click = () => (showValue.value = !showValue.value);
+let directionValue = ref("right");
+
+const showDirection = (direction) => {
+  switch (direction) {
+    case "left":
+      directionValue.value = "left";
+      showValue.value = true;
+      break;
+    case "right":
+      directionValue.value = "right";
+      showValue.value = true;
+      break;
+    default:
+      directionValue.value = "left";
+      showValue.value = true;
+  }
+};
+
+let showValue2 = ref(false);
+let directionValue2 = ref("left");
+
+const showOverlayBgColor = () => {
+  directionValue2.value = "left";
+  showValue2.value = true;
+};
 </script>
+
 
 <style lang="scss"></style>

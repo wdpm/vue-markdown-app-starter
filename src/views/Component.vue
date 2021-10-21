@@ -12,6 +12,9 @@
           <li>
             <router-link to="/component/button">button</router-link>
           </li>
+          <li>
+            <router-link to="/component/drawer">drawer</router-link>
+          </li>
           <li><a href="">Nav 2</a></li>
           <li><a href="">Nav 3</a></li>
           <li><a href="">Nav 3</a></li>
@@ -67,6 +70,8 @@
 </template>
 
 <script>
+import { nextTick } from "vue";
+
 export default {
   name: "Component",
   data() {
@@ -79,6 +84,14 @@ export default {
     this.syncAsideWhenScroll();
     this.setupToggleMenu();
     this.setupMediaQuery();
+  },
+  watch: {
+    $route(newValue, oldValue) {
+      // rebuild aside toc
+      nextTick(() => {
+        this.copyMarkdownTocToAside();
+      });
+    }
   },
   beforeUnmount() {
     this.stopObserveAside();
@@ -95,7 +108,7 @@ export default {
         entries.forEach((entry) => {
           const id = entry.target.getAttribute("id");
           const anchorLink = document.querySelector(`.toc li a[href="#${id}"]`);
-          if (!anchorLink) console.error("id", id);
+          if (!anchorLink) return;
           if (entry.intersectionRatio > 0) {
             anchorLink.parentElement.classList.add("active");
           } else {
@@ -113,8 +126,11 @@ export default {
     },
     copyMarkdownTocToAside() {
       const tableOfContent = document.querySelector("html .markdown-body section html .table-of-contents");
-      const toc = document.querySelector(".toc");
-      toc.appendChild(tableOfContent.cloneNode(true));
+      let toc = document.querySelector(".toc");
+      if (toc && tableOfContent) {
+        toc.innerHTML = "";
+        toc.appendChild(tableOfContent.cloneNode(true));
+      }
     },
     setupToggleMenu() {
       const toggle = document.getElementById("toggle");

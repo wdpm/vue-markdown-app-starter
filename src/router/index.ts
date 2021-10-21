@@ -22,6 +22,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(`@/docs/${"button"}.md`)
       },
       {
+        path: "drawer",
+        component: () => import(`@/docs/${"drawer"}.md`)
+      },
+      {
         path: "test",
         component: () => import(`@/docs/${"test"}.md`)
       }

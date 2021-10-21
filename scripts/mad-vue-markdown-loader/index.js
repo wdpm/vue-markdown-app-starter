@@ -47,7 +47,7 @@ const renderVueTemplate = (html, wrapper) => {
   // extract style and script(first), then remove style and script
   const output = {
     style: $.html("style"),
-    // get only the first script child. Causes issues if multiple script files in page.
+    // HARDCODE: get only the first script child. Causes issues if multiple script files in page.
     script: $.html($("script").first())
   };
   $("style").remove();
@@ -56,20 +56,14 @@ const renderVueTemplate = (html, wrapper) => {
   let result;
 
   // $.html() means all html code
-  result =
-    `<template><${wrapper}>` +
-    $.html() +
-    `</${wrapper}></template>\n` +
-    output.style +
-    "\n" +
-    output.script;
+  result = `<template><${wrapper}>` + $.html() + `</${wrapper}></template>\n` + output.style + "\n" + output.script;
 
   return result;
 };
 
-module.exports = function(source) {
+module.exports = function (source) {
   this.cacheable && this.cacheable();
-  let parser, preprocess,postprocess;
+  let parser, preprocess, postprocess;
   const params = loaderUtils.getOptions(this) || {};
   // NEED debug: this._compilation.__vueMarkdownOptions__
   const vueMarkdownOptions = (this._compilation && this._compilation.__vueMarkdownOptions__) || {};
@@ -114,31 +108,31 @@ module.exports = function(source) {
 
     //add ruler:extract script and style tags from html token content
     !preventExtract &&
-    parser.core.ruler.push("extract_script_or_style", function replace(state) {
-      let tag_reg = new RegExp("<(script|style)(?:[^<]|<)+</\\1>", "g");
-      let newTokens = [];
-      // get new tokens
-      state.tokens
-        .filter(token => token.type === "fence" && token.info === "html")
-        .forEach(token => {
-          let tokens = (token.content.match(tag_reg) || []).map(content => {
-            let t = new Token("html_block", "", 0);
-            t.content = content;
-            return t;
+      parser.core.ruler.push("extract_script_or_style", function replace(state) {
+        let tag_reg = new RegExp("<(script|style)(?:[^<]|<)+</\\1>", "g");
+        let newTokens = [];
+        // get new tokens
+        state.tokens
+          .filter((token) => token.type === "fence" && token.info === "html")
+          .forEach((token) => {
+            let tokens = (token.content.match(tag_reg) || []).map((content) => {
+              let t = new Token("html_block", "", 0);
+              t.content = content;
+              return t;
+            });
+
+            if (tokens.length > 0) {
+              newTokens.push.apply(newTokens, tokens);
+            }
           });
 
-          if (tokens.length > 0) {
-            newTokens.push.apply(newTokens, tokens);
-          }
-        });
-
-      // merge new tokens to tokens
-      state.tokens.push.apply(state.tokens, newTokens);
-    });
+        // merge new tokens to tokens
+        state.tokens.push.apply(state.tokens, newTokens);
+      });
 
     // apply webpack plugins
     if (plugins) {
-      plugins.forEach(function(plugin) {
+      plugins.forEach(function (plugin) {
         if (Array.isArray(plugin)) {
           parser.use.apply(parser, plugin);
         } else {
@@ -152,14 +146,14 @@ module.exports = function(source) {
    * override default parser rules by adding v-pre attribute on 'code' and 'pre' tags
    * @param {Array<string>} rules rules to override
    */
-  const overrideParserRules = function(rules) {
+  const overrideParserRules = function (rules) {
     if (parser && parser.renderer && parser.renderer.rules) {
       let parserRules = parser.renderer.rules;
 
-      rules.forEach(function(rule) {
+      rules.forEach(function (rule) {
         if (parserRules && parserRules[rule]) {
           const defaultRule = parserRules[rule];
-          parserRules[rule] = function() {
+          parserRules[rule] = function () {
             return addVuePreviewAttr(defaultRule.apply(this, arguments));
           };
         }
@@ -188,5 +182,4 @@ module.exports = function(source) {
   } else {
     return "module.exports = " + JSON.stringify(result);
   }
-
 };
