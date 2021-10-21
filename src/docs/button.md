@@ -80,11 +80,11 @@
 :::demo 透明版本，背景颜色透明。
 
 ``` html
-<mad-button transparent type="primary">primary light</mad-button>
-<mad-button transparent type="success">success light</mad-button>
-<mad-button transparent type="info">info light</mad-button>
-<mad-button transparent type="warning">warning light</mad-button>
-<mad-button transparent type="error">error light</mad-button>
+<mad-button transparent type="primary">primary T</mad-button>
+<mad-button transparent type="success">success T</mad-button>
+<mad-button transparent type="info">info T</mad-button>
+<mad-button transparent type="warning">warning T</mad-button>
+<mad-button transparent type="error">error T</mad-button>
 ```
 
 :::
