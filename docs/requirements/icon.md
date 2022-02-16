@@ -6,18 +6,46 @@
 
 - [ ] 图标风格必须扁平、简约
 - [ ] 涵盖web常用图标集合
-- [ ] 添加MAD相关的图标集合
+- [ ] 添加ACGN相关的图标集合
 - [ ] 必须兼容已有的开源图标系统
   - 兼容 Material Design
   - 兼容 Font Awesome
   - 兼容 xicons
-- [ ] 内置图标构建流程
+- [ ] 提炼图标构建流程
   - 可选：借助icomoon
   - 可选：借助npm第三方转化库
 
 ## 站在巨人的肩膀上
 
 ### 参考 xicons
+> @vicons/antd@0.11.0 WindowsFilled.js
+```js
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
+const vue_1 = require('vue')
+const _hoisted_1 = {
+  xmlns: 'http://www.w3.org/2000/svg',
+  'xmlns:xlink': 'http://www.w3.org/1999/xlink',
+  viewBox: '0 0 1024 1024'
+}
+const _hoisted_2 = /*#__PURE__*/ vue_1.createVNode(
+  'path',
+  {
+    d: 'M523.8 191.4v288.9h382V128.1zm0 642.2l382 62.2v-352h-382zM120.1 480.2H443V201.9l-322.9 53.5zm0 290.4L443 823.2V543.8H120.1z',
+    fill: 'currentColor'
+  },
+  null,
+  -1
+  /* HOISTED */
+)
+exports.default = vue_1.defineComponent({
+  name: 'WindowsFilled',
+  render: function render(_ctx, _cache) {
+    return vue_1.openBlock(), vue_1.createBlock('svg', _hoisted_1, [_hoisted_2])
+  }
+})
+
+```
 
 ```
 .icon {
@@ -89,12 +117,32 @@ Home icon example:
 ```
 - done这个文字就是生成的图标。
 
+### feather icons
+```svg
+<svg viewBox="0 0 24 24" width="24" height="24" stroke="red" stroke-width="2" fill="blue" stroke-linecap="round"
+     stroke-linejoin="round" class="css-i6dzq1">
+  <circle cx="12" cy="12" r="10"></circle>
+  <line x1="12" y1="8" x2="12" y2="12"></line>
+  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+</svg>
+```
+- width & height: size
+- stroke
+- stroke-width
+- fill: currentColor(by default)
+- stroke-linecap:
+- stroke-linejoin
+- custom css class
+
 ## 参考
 
-- [Meet Devicons](https://github.com/vorillaz/devicons) SCSS文件构建
+- [Meet Devicons](https://github.com/vorillaz/devicons) SCSS文件构建值得参考。
 - [Evil icons](https://evil-icons.io/) 参考常用图标枚举+AI设计文件
 - [Sample Vue.js SVG Icon System](https://github.com/sdras/vue-sample-svg-icons)
 
-  一个IconBase组件，内容被特定图标替换。特定图标仅含有SVG `<path>`路径。值得参考。
+  一个IconBase组件，内容被特定图标替换。特定图标仅含有SVG `<path>`路径。IconBase.vue值得参考。
 - [EVA-icon](https://github.com/moeoverflow/EVA-icon) EVA浓度极高。使用icomoon制作。
 - [Material Icons Guide](https://developers.google.com/fonts/docs/material_icons) 非常推荐。
+- [Vue3从0到1组件开发-基础组件：Icon图标库](https://juejin.cn/post/6992977372542681101) 可以参考实现。
+- [xicons](https://github.com/07akioni/xicons) 可以参考vicons-utils的实现。
+- [feather icons](https://feathericons.com/) 自定义size,stroke-width,stroke,fill
