@@ -13,13 +13,8 @@
 
 ## website layout
 
-### typography
-
-- https://labs.jensimmons.com/
-
 ### masterpiece
 
-- canjs
 - rxjs
 - naive-UI
 
