@@ -65,5 +65,4 @@ const showOverlayBgColor = () => {
 };
 </script>
 
-
 <style lang="scss"></style>
